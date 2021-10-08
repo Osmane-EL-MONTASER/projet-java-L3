@@ -25,7 +25,7 @@ public class Equipage {
 	//TO DO Paul
 	public static void afficherCout(boolean isNaive) {
 		if(isNaive) {
-			System.out.println("Le coût est "+calculerCoutNaif());
+			System.out.println("Le coût est "+calculerCoutNaif()+"\n");
 		}
 	}
 	
@@ -40,14 +40,22 @@ public class Equipage {
 	}
 	
 	//TO DO Paul
-	public static void initEquipage() {
+	public static void initEquipageNaif() {
 		int nombrePirates;
-		System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) : \n");
-		nombrePirates=sc.nextInt();
-		for(int i=0;i<nombrePirates;i++) {
-			pirates.add(new Pirate(nombrePirates));
-		}
-		
+		boolean init=false;
+		do {
+			System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) : \n");
+			nombrePirates=sc.nextInt();
+			if(nombrePirates>26 || nombrePirates<0) {
+				System.out.println("Nombre de pirates incohérent.\nRéessayer\n");
+			}else {
+				for(int i=0;i<nombrePirates;i++) {
+					pirates.add(new Pirate(nombrePirates));
+				}
+				init=true;
+			}
+			
+		}while(init);
 	}
 	
 	public static void main(String[] args) {
