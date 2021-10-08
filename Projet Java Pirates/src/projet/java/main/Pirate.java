@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Pirate {
 	private static char n = 'A';
 	
-	private char name;
+	private char nom;
 	private ArrayList<Boolean> relations;
 	private ArrayList<Tresor> preferences;
 	private Tresor objetRecu;
@@ -18,7 +18,7 @@ public class Pirate {
 		preferences = new ArrayList<>(totalPirates);
 	}
 	
-	//TO DO
+	//TO DO Osmane
 	public boolean relationAvec(Pirate p) {
 		return true;
 	}
@@ -30,10 +30,24 @@ public class Pirate {
 		return preferences;
 	}
 	
+	public char getNom() {
+		return nom;
+	}
+	
+	public Tresor getObjetRecu() {
+		return objetRecu;
+	}
+	
+	public void setObjetRecu(Tresor objetRecu) {
+		this.objetRecu = objetRecu;
+	}
+	
+	//TO DO Paul
 	public void setRelation(int i, boolean b) {
 		
 	}
 	
+	//TO DO Paul
 	public void setPreference(int i, Tresor t) {
 		
 	}
