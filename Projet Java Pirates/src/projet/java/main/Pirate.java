@@ -23,6 +23,21 @@ public class Pirate {
 		return true;
 	}
 	
+	public boolean estJaloux(ArrayList<Pirate> pirates) {
+		boolean isJaloux = false;
+		
+		//S'il a recu ce qu'il voulait, il n'est 
+		//pas jaloux
+		if (preferences.get(0) == objetRecu)
+			return isJaloux;
+		
+		for (Pirate p : pirates) {
+			
+		}
+		
+		return isJaloux;
+	}
+	
 	public ArrayList<Boolean> getRelations() {
 		return relations;
 	}

@@ -14,7 +14,15 @@ public class Equipage {
 	
 	//TO DO Osmane
 	public static int calculerCoutNaif() {
-		return 0;
+		int cout = 0;
+		
+		//Pour chaque pirate on ajoute le cout correpondant 
+		//au cout total.
+		for (Pirate p : pirates) {
+			
+		}
+		
+		return cout;
 	}
 	
 	//TO DO Paul
