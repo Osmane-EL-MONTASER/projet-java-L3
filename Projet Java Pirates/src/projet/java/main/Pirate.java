@@ -13,9 +13,12 @@ public class Pirate {
 	public Pirate(int totalPirates) {
 		if (n > 'Z')
 			System.out.println("Impossible de nommer le pirate");
-	
-		relations = new ArrayList<>(totalPirates);
-		preferences = new ArrayList<>(totalPirates);
+		else {
+			nom=n++;
+			relations = new ArrayList<>(totalPirates);
+			preferences = new ArrayList<>(totalPirates);
+		}
+		
 	}
 	
 	//TO DO Osmane
@@ -44,11 +47,11 @@ public class Pirate {
 	
 	//TO DO Paul
 	public void setRelation(int i, boolean b) {
-		
+		relations.set(i, b);
 	}
 	
 	//TO DO Paul
 	public void setPreference(int i, Tresor t) {
-		
+		preferences.set(i, t);
 	}
 }
