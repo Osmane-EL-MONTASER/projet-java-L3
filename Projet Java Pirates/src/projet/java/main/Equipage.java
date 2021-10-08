@@ -85,30 +85,52 @@ public class Equipage {
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
+		tresors.add(new Tresor());
 		
-		pirates.add(new Pirate(3));
-		pirates.add(new Pirate(3));
-		pirates.add(new Pirate(3));
+		pirates.add(new Pirate(4));
+		pirates.add(new Pirate(4));
+		pirates.add(new Pirate(4));
+		pirates.add(new Pirate(4));
 		
 		pirates.get(0).setPreference(0, tresors.get(0));
-		pirates.get(0).setPreference(1, tresors.get(2));
-		pirates.get(0).setPreference(2, tresors.get(1));
+		pirates.get(0).setPreference(1, tresors.get(1));
+		pirates.get(0).setPreference(2, tresors.get(2));
+		pirates.get(0).setPreference(3, tresors.get(3));
+		
 		pirates.get(1).setPreference(0, tresors.get(0));
 		pirates.get(1).setPreference(1, tresors.get(2));
 		pirates.get(1).setPreference(2, tresors.get(1));
-		pirates.get(2).setPreference(0, tresors.get(0));
-		pirates.get(2).setPreference(1, tresors.get(2));
-		pirates.get(2).setPreference(2, tresors.get(1));
+		pirates.get(1).setPreference(3, tresors.get(3));
 		
-		pirates.get(0).setRelation(0, true);
+		pirates.get(2).setPreference(0, tresors.get(2));
+		pirates.get(2).setPreference(1, tresors.get(1));
+		pirates.get(2).setPreference(2, tresors.get(0));
+		pirates.get(2).setPreference(3, tresors.get(3));
+		
+		pirates.get(3).setPreference(0, tresors.get(0));
+		pirates.get(3).setPreference(1, tresors.get(3));
+		pirates.get(3).setPreference(2, tresors.get(1));
+		pirates.get(3).setPreference(3, tresors.get(2));
+		
+		pirates.get(0).setRelation(0, false);
 		pirates.get(0).setRelation(1, true);
-		pirates.get(0).setRelation(2, true);
+		pirates.get(0).setRelation(2, false);
+		pirates.get(0).setRelation(3, false);
+		
 		pirates.get(1).setRelation(0, true);
 		pirates.get(1).setRelation(1, false);
 		pirates.get(1).setRelation(2, true);
+		pirates.get(1).setRelation(3, true);
+		
 		pirates.get(2).setRelation(0, false);
 		pirates.get(2).setRelation(1, true);
 		pirates.get(2).setRelation(2, false);
+		pirates.get(2).setRelation(3, false);
+		
+		pirates.get(3).setRelation(0, false);
+		pirates.get(3).setRelation(1, true);
+		pirates.get(3).setRelation(2, false);
+		pirates.get(3).setRelation(3, false);
 		
 		attributionNaive();
 		afficherCout(true);
