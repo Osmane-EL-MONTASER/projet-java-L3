@@ -1,5 +1,8 @@
 package projet.java.main;
 import java.util.Scanner;
+
+import javax.management.relation.RelationService;
+
 import java.util.ArrayList;
 
 public class Equipage {
@@ -38,7 +41,61 @@ public class Equipage {
 	
 	//TO DO Paul
 	public static void versionNaive() {
-		
+		int choix;
+		int p;
+		int n;
+		initEquipageNaif();
+		attributionNaive();
+		do {
+			System.out.println("1 : Indiquer les relations entre les pirates\n");
+			System.out.println("2 : Indiquer les préférences des pirates sur les trésors\n");
+			System.out.println("3 : Fin\n");
+			choix=sc.nextInt();
+			switch(choix) {
+			case 1:
+				System.out.println("les noms des pirates sont : ");
+				for(int i=0;i<pirates.size();i++) {
+					System.out.print("pirate "+(i+1)+": "+pirates.get(i).getNom()+"  ");
+				}
+				System.out.println("\n\nPour quel pirate voulez vous changer les relations : ");
+				p=sc.nextInt()-1;
+				System.out.println("Qui le pirate "+pirates.get(p).getNom()+" n'aime t-il pas? (0 s'il s'entend avec tout le monde)");
+				do {
+					n=sc.nextInt()-1;
+					if(n!=-1) {
+						pirates.get(n).setRelation(n, true);
+					}
+					System.out.print("Le pirate "+pirates.get(p).getNom()+" n'aime pas");
+					for(int i=0;i<pirates.size();i++) {
+						if(pirates.get(i).getRelation(i)) {
+							System.out.print(" "+pirates.get(i).getNom());
+						}
+					}
+					if(n!=-1) {
+						System.out.println("\nQui d'autre? (0 si personne d'autre)");
+					}else {
+						System.out.println("\n");
+					}
+				}while(n!=-1);
+				break;
+			case 2:
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
+				}
+				System.out.println("\n\nPour quel pirate voulez vous changer les préférences : ");
+				p=sc.nextInt()-1;
+				for(int i=0;i<pirates.size();i++) {
+					System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p).getNom()+" : ");
+					n=sc.nextInt();
+					pirates.get(p).setPreference(i, new Tresor());
+					}
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
+				}
+				break;
+				}
+			
+		}while(choix!=3);
 	}
 	
 	public static void attributionNaive() {
@@ -63,7 +120,7 @@ public class Equipage {
 	//TO DO Paul
 	public static void initEquipageNaif() {
 		int nombrePirates;
-		boolean init=false;
+		boolean init=true;
 		do {
 			System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) : \n");
 			nombrePirates=sc.nextInt();
@@ -73,16 +130,23 @@ public class Equipage {
 				for(int i=0;i<nombrePirates;i++) {
 					pirates.add(new Pirate(nombrePirates));
 				}
-				init=true;
+				init=false;
 			}
 			
 		}while(init);
+		System.out.println("Votre équipage comporte "+nombrePirates+" pirates.\n");
+		System.out.println("leurs noms sont les suivants : ");
+		for(int i=0;i<nombrePirates;i++) {
+			System.out.print(pirates.get(i).getNom()+" ");
+		}
+		System.out.println("\n");
 	}
 	
 	public static void main(String[] args) {
+		versionNaive();
 		sc.close();
 		
-		tresors.add(new Tresor());
+		/*tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
@@ -133,6 +197,6 @@ public class Equipage {
 		pirates.get(3).setRelation(3, false);
 		
 		attributionNaive();
-		afficherCout(true);
+		afficherCout(true);*/
 	}
 }

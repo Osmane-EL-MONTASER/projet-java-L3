@@ -68,6 +68,9 @@ public class Pirate {
 	public ArrayList<Boolean> getRelations() {
 		return relations;
 	}
+	public boolean getRelation(int i) {
+		return relations.get(i);
+	}
 	public ArrayList<Tresor> getPreferences() {
 		return preferences;
 	}

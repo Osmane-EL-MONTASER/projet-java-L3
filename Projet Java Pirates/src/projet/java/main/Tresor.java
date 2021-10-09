@@ -1,7 +1,7 @@
 package projet.java.main;
 
 public class Tresor {
-	private static int n = 0;
+	private static int n = 1;
 	
 	private String nom;
 	private int num;
