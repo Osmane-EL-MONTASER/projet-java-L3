@@ -45,7 +45,6 @@ public class Equipage {
 		int p;
 		int n;
 		initEquipageNaif();
-		attributionNaive();
 		do {
 			System.out.println("1 : Indiquer les relations entre les pirates\n");
 			System.out.println("2 : Indiquer les préférences des pirates sur les trésors\n");
@@ -80,22 +79,27 @@ public class Equipage {
 				break;
 			case 2:
 				for(int i=0;i<pirates.size();i++) {
-					System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
+					System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
 				}
-				System.out.println("\n\nPour quel pirate voulez vous changer les préférences : ");
-				p=sc.nextInt()-1;
-				for(int i=0;i<pirates.size();i++) {
-					System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p).getNom()+" : ");
-					n=sc.nextInt();
-					pirates.get(p).setPreference(i, new Tresor());
+				do {
+					System.out.println("\n\nPour quel pirate voulez vous changer les préférences : ");
+					System.out.println("0 : Quitter");
+					p=sc.nextInt()-1;
+					if(p==-1)
+						break;
+					for(int i=0;i<pirates.size();i++) {
+						System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p).getNom()+" : ");
+						n=sc.nextInt()-1;
+						pirates.get(p).setPreference(i, tresors.get(n));
+						}
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
 					}
-				for(int i=0;i<pirates.size();i++) {
-					System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
-				}
-				break;
+				}while(true);
 				}
 			
 		}while(choix!=3);
+		attributionNaive();
 	}
 	
 	public static void attributionNaive() {
@@ -129,10 +133,10 @@ public class Equipage {
 			}else {
 				for(int i=0;i<nombrePirates;i++) {
 					pirates.add(new Pirate(nombrePirates));
+					tresors.add(new Tresor());
 				}
 				init=false;
 			}
-			
 		}while(init);
 		System.out.println("Votre équipage comporte "+nombrePirates+" pirates.\n");
 		System.out.println("leurs noms sont les suivants : ");
