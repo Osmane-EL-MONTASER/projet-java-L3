@@ -39,14 +39,8 @@ public class Equipage {
 		}
 	}
 	
-	//TO DO Paul
-	public static void versionNaive() {
-		int choix;
-		int p;
-		int n;
-		String ps;
-		Pirate p1,p2;
-		initEquipageNaif();
+	public static void menuRelationsPreferences() {
+		int choix,n,p;
 		do {
 			System.out.println("1 : Indiquer les relations entre les pirates\n");
 			System.out.println("2 : Indiquer les préférences des pirates sur les trésors\n");
@@ -101,7 +95,13 @@ public class Equipage {
 				}
 			
 		}while(choix!=3);
-		attributionNaive();
+	}
+	
+	public static void menuEchangerEtCout() {
+		Pirate p1,p2;
+		int p;
+		int choix;
+		String ps;
 		do {
 			System.out.println("1 : Echanger des objets entre les pirates\n");
 			System.out.println("2 : Afficher le coût de la solution actuelle\n");
@@ -171,6 +171,17 @@ public class Equipage {
 		}while(choix!=3);
 	}
 	
+	public static void versionNaive() {
+		initEquipageNaif();
+		menuRelationsPreferences();
+		attributionNaive();
+		menuEchangerEtCout();
+	}
+	
+	public static void versionSotomatique() {
+		System.out.println("pas encore programmé\n");
+	}
+	
 	public static void attributionNaive() {
 		ArrayList<Tresor> tresorsDispos = new ArrayList<Tresor>(tresors);
 		
@@ -216,7 +227,16 @@ public class Equipage {
 	}
 	
 	public static void main(String[] args) {
-		versionNaive();
+		int choix;
+		System.out.println("1 : Version Naive\2 : version Sotomatique");
+		choix=sc.nextInt();
+		if(choix==1) {
+			versionNaive();
+		}else if(choix==2) {
+			versionSotomatique();
+		}else {
+			System.out.println("Option impossible\n");
+		}
 		sc.close();
 		
 		/*tresors.add(new Tresor());
