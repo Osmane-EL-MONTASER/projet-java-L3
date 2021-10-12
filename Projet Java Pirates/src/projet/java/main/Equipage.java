@@ -44,6 +44,8 @@ public class Equipage {
 		int choix;
 		int p;
 		int n;
+		String ps;
+		Pirate p1,p2;
 		initEquipageNaif();
 		do {
 			System.out.println("1 : Indiquer les relations entre les pirates\n");
@@ -100,6 +102,73 @@ public class Equipage {
 			
 		}while(choix!=3);
 		attributionNaive();
+		do {
+			System.out.println("1 : Echanger des objets entre les pirates\n");
+			System.out.println("2 : Afficher le coût de la solution actuelle\n");
+			System.out.println("3 : Fin\n");
+			choix=sc.nextInt();
+			switch(choix) {
+			case 1:
+				System.out.println("Les préferences des pirates sont :");
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+				}
+				System.out.println("\nLes objets possédés des pirates :");
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+				}
+				System.out.println("\nPirates qui doivent échanger leur trésor :");
+				System.out.println("Pirate 1 : ");
+				ps=sc.next();
+				p=ps.charAt(0)-'A';
+				p1=pirates.get(p);
+				System.out.println("Pirate 2 : ");
+				ps=sc.next();
+				p=ps.charAt(0)-'A';
+				p2=pirates.get(p);
+				echanger(p1,p2);
+				do {
+					System.out.println("\nLes préferences des pirates sont :");
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+					}
+					System.out.println("\nLes objets possédés des pirates :");
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+					}
+					System.out.println("Les préferences des pirates sont :");
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+					}
+					System.out.println("\nLes objets possédés des pirates :");
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+					}
+					System.out.println("Quitter? 0:OUI 1:NON");
+					choix=sc.nextInt();
+					if(choix==0) {
+						break;
+					}
+					System.out.println("\nPirates qui doivent échanger leur trésor :");
+					System.out.println("Pirate 1 : ");
+					ps=sc.next();
+					p=ps.charAt(0)-'A';
+					p1=pirates.get(p);
+					System.out.println("Pirate 2 : ");
+					ps=sc.next();
+					p=ps.charAt(0)-'A';
+					p2=pirates.get(p);
+					echanger(p1,p2);
+				}while(true);
+			case 2:
+				System.out.println("\nLes objets possédés des pirates :");
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+				}
+				afficherCout(true);
+				break;
+			}
+		}while(choix!=3);
 	}
 	
 	public static void attributionNaive() {
