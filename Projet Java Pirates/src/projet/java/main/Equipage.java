@@ -228,7 +228,7 @@ public class Equipage {
 	
 	public static void main(String[] args) {
 		int choix;
-		System.out.println("1 : Version Naive\2 : version Sotomatique");
+		System.out.println("1 : Version Naive\n2 : version Sotomatique");
 		choix=sc.nextInt();
 		if(choix==1) {
 			versionNaive();
