@@ -1,7 +1,4 @@
 # Projet Java L3 Partage de butin - Version Naïve
-
----
-
 ## Description
 Ceci est la documentation de notre projet Java L3 Partage de butin pour la version naïve. 
 
