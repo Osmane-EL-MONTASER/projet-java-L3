@@ -9,7 +9,10 @@ Classe Pirate.
 :Attributs:
    **private static char** - *n* : Sert à récupérer le prochain nom du pirate en question.
 
-   **private char** - *nom* : Le nom du pirate (Lettre de A à Z).
+   **private char** - *nom* : Le nom du pirate.
+   
+   .. note::
+      Les noms de pirates sont représentés par une lettre de l'alphabet (A à Z). Dans la version suivante les noms seront remplacés par des chaînes de caractères.
 
    **private ArrayList<Boolean>** - *relations* : Structure représentant les relations entre les pirates. **True** si les pirates ne s'aiment pas et **False** si les pirates s'entendent bien.
 
@@ -45,7 +48,7 @@ Pour initialiser celui-ci il faut lui passer le nombre total de pirates qu'il y 
    TO-DO
 
 .. method:: public ArrayList<Tresor> getPreferences()
-   
+
    TO-DO
 
 .. method:: public char getNom()
