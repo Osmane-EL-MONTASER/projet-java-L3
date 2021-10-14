@@ -29,28 +29,59 @@ Pour initialiser celui-ci il faut lui passer le nombre total de pirates qu'il y 
 
 .. method:: public Pirate(int totalPirates)
 
-   TO-DO
+   :param: **int** - *totalPirates* : Le nombre total des pirates de l'équipage.
+
+   Le constructeur de la classe **Pirate** génère automatiquement le nom du pirate, initialise ses préférences avec une liste vide et ses relations entre pirates avec une liste de booléens tous initialisés à **False** et son objet reçu de base est **null**.
+
+   .. warning::
+
+      Il ne faut surtout pas oublier d'ajouter les préférences et les relations. Surtout les préférences, sinon le programme lèvera une **NullPointerException**.
 
 .. method:: public boolean relationAvec(Pirate p)
 
-   TO-DO
+   :param: **Pirate** - *p* : Le pirate avec qui comparer la relation.
+   :return: **boolean** : **Vrai** si les pirates ne s'entendent pas, **False** sinon.
 
 .. method:: public boolean estJaloux(ArrayList<Pirate> pirates)
 
-   TO-DO
+   :param: **ArrayList<Pirate>** - *pirates* : La liste des pirates de l'équipage entier.
+   :return: **boolean** : **Vrai** si le pirate est jaloux d'au moins un autre pirate de l'équipage, **False** sinon.
 
 .. method:: public ArrayList<Boolean> getRelations()
 
-   TO-DO
+   :return: **ArrayList<Boolean>** : La liste des booléens représentant les relations entre pirates. **Vrai** s'ils ne s'entendent pas, **Faux** sinon.
 
 .. method:: public boolean getRelation(int i)
 
-   TO-DO
+   :param: **int** - *i* : L'index du pirate de la liste des pirates de l'équipage.
+   :return: **boolean** : Le booléen représentant la relation avec un pirate de la liste à l'index *i*. **Vrai** s'ils ne s'entendent pas, **Faux** sinon.
 
 .. method:: public ArrayList<Tresor> getPreferences()
 
-   TO-DO
+   :return: **ArrayList<Tresor>** : La liste de ses préférences rangées dans l'ordre croissant. Plus l'index de l'objet est faible, plus il voudra cet objet.
 
 .. method:: public char getNom()
 
-   TO-DO
+   :return: **char** : Le nom du *Pirate* correspondant à une lettre de l'alphabet.
+
+.. method:: public Tresor getObjetRecu()
+
+   :return: **Tresor** : Le trésor que le pirate a reçu.
+
+   .. note::
+
+      L'objet reçu est initialisé à **null** dans le constructeur. Pensez donc bien à lui attribuer un objet avant d'utiliser cette valeur !
+
+.. method:: public void setObjetRecu(Tresor objetRecu)
+
+   :param: **Tresor** - *objetRecu* : L'objet que le pirate doit recevoir lors du partage du butin.
+
+.. method:: public void setRelation(int i, boolean b)
+
+   :param: **int** - *i* : L'index du pirate auquel changer la relation.
+   :param: **boolean** - *b* : **Vrai** s'ils ne s'entendent pas, **Faux** sinon.
+
+.. method:: public void setPreference(int i, Tresor t)
+
+   :param: **int** - *i* : L'ordre de la préférence pour le **Tresor** *t*.
+   :param: **Tresor** - *t* : Le trésor correspondant à la préférence.
