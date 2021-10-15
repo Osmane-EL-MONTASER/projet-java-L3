@@ -77,7 +77,35 @@
 <h1>Classe Tresor.<a class="headerlink" href="#classe-tresor" title="Lien permanent vers ce titre"></a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<p>Ici vous trouverez toutes les informations correspondantes aux classes du programme.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">public</span> <span class="pre">class</span> <span class="pre">Tresor()</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list">
+<dt class="field-odd">Attributs</dt>
+<dd class="field-odd"><p><strong>private static int</strong> - <em>n</em> : Sert à récupérer le numéro du prochain trésor. Ce numéro sert à nommer le nom du trésor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dans une prochaine version cette variable disparaîtra et les noms seront directement extrait d’un fichier texte comportant des noms de trésors.</p>
+</div>
+<p><strong>private String</strong> - <em>nom</em> : Le nom du trésor.</p>
+<p><strong>private int</strong> - <em>num</em> : Le numéro du trésor.</p>
+</dd>
+</dl>
+<p>Cette classe représente un trésor récupéré par l’équipage. Il possède un nom composé du caractère “o” suivi du numéro du trésor.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">public</span> <span class="pre">Tresor()</span></span></dt>
+<dd><p>Le constructeur de la classe <strong>Tresor</strong> génère automatiquement le nom du trésor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">&#64;Override</span> <span class="pre">public</span> <span class="pre">String</span> <span class="pre">toString()</span></span></dt>
+<dd><p>Cette méthode permet de retourner une chaîne de caractère contenant le nom du trésor à partir d’une référence de type <strong>Tresor</strong>.</p>
+</dd></dl>
+
 </section>
 
 

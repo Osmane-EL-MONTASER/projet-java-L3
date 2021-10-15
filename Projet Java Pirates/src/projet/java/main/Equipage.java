@@ -5,7 +5,7 @@ import javax.management.relation.RelationService;
 
 import java.util.ArrayList;
 
-public class Equipage {
+public abstract class Equipage {
 	
 	public static ArrayList<Pirate> pirates = new ArrayList<>();
 	public static ArrayList<Tresor> tresors = new ArrayList<>();

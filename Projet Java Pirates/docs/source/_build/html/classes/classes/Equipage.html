@@ -78,7 +78,52 @@
 <h1>Classe Equipage.<a class="headerlink" href="#classe-equipage" title="Lien permanent vers ce titre"></a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<p>Ici vous trouverez toutes les informations correspondantes aux classes du programme.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">public</span> <span class="pre">abstract</span> <span class="pre">class</span> <span class="pre">Equipage()</span></span></dt>
+<dd></dd></dl>
+
+<dl class="field-list">
+<dt class="field-odd">Attributs</dt>
+<dd class="field-odd"><p><strong>public static ArrayList&lt;Pirate&gt;</strong> - <em>pirates</em> : Contient la liste de tous les pirates de l’équipage.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Dans la version naïve, pirates.size() &lt; 26 !</p>
+</div>
+<p><strong>public static ArrayList&lt;Tresor&gt;</strong> - <em>tresors</em> : Contient la liste de tous les trésors de l’équipage.</p>
+<p><strong>public static Scanner</strong> - <em>sc</em> : L’objet Scanner permettant de récupérer les entrées de la sortie standard.</p>
+<p>Cette classe ne peut pas être initialisée. Elle comporte uniquement des méthodes statiques utilitaires permettant de créer un équipage à partir des 2 listes statiques fournies en tant qu’attributs de <strong>Equipage</strong>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">public</span> <span class="pre">static</span> <span class="pre">void</span> <span class="pre">echanger(Pirate</span> <span class="pre">p1,</span> <span class="pre">Pirate</span> <span class="pre">p2)</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p><strong>Pirate</strong> - <em>p1</em> : Le premier pirate avec lequel échanger le trésor.</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p><strong>Pirate</strong> - <em>p2</em> : Le deuxième pirate avec lequel échanger le trésor.</p>
+</dd>
+</dl>
+<p>Cette méthode permet d’échanger les trésors que possède un <strong>Pirate</strong> <em>p1</em> avec un <strong>Pirate</strong> <em>p2</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">public</span> <span class="pre">static</span> <span class="pre">int</span> <span class="pre">calculerCoutNaif()</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Renvoie</dt>
+<dd class="field-odd"><p><strong>int</strong> : Le coût de la solution naïve en fonction du nombre de pirates jaloux.</p>
+</dd>
+</dl>
+<p>Cette méthode utilise la liste des pirates des attributs statiques.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Si vous voulez calculer le coût d’une solution, vous pouvez en appelant d’abord la méthode solutionNaïve(), ou tout simplement en implémentant votre propre méthode de partage de butin.</p>
+</div>
+</dd></dl>
+
 </section>
 
 
