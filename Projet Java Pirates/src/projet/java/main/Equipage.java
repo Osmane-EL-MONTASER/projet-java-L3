@@ -39,8 +39,21 @@ public abstract class Equipage {
 		}
 	}
 	
+	public static void afficherPreferences() {
+		for(int i=0;i<pirates.size();i++) {
+			System.out.println("Pirate "+pirates.get(i).getNom()+": "+pirates.get(i).getPreferences());
+		}
+	}
+	
+	public static void afficherObjetsRecus() {
+		for(int i=0;i<pirates.size();i++) {
+			System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+		}
+	}
+	
 	public static void menuRelationsPreferences() {
-		int choix,n,p;
+		int choix,n,p1,p2;
+		String p;
 		do {
 			System.out.println("1 : Indiquer les relations entre les pirates\n");
 			System.out.println("2 : Indiquer les préférences des pirates sur les trésors\n");
@@ -52,45 +65,43 @@ public abstract class Equipage {
 				for(int i=0;i<pirates.size();i++) {
 					System.out.print("pirate "+(i+1)+": "+pirates.get(i).getNom()+"  ");
 				}
-				System.out.println("\n\nPour quel pirate voulez vous changer les relations : ");
-				p=sc.nextInt()-1;
-				System.out.println("Qui le pirate "+pirates.get(p).getNom()+" n'aime t-il pas? (0 s'il s'entend avec tout le monde)");
+				System.out.println("\n\nPour quel pirate voulez vous changer les relations :\n(indiquez un nom)");
+				p=sc.next();
+				p1=p.charAt(0)-'A';
+				System.out.println("Qui le pirate "+pirates.get(p1).getNom()+" n'aime t-il pas? (0 s'il s'entend avec tout le monde)");
 				do {
-					n=sc.nextInt()-1;
-					if(n!=-1) {
-						pirates.get(n).setRelation(n, true);
+					p=sc.next();
+					if(p.compareTo("0")==0) {
+						break;
+						
+					}else {
+						p2=p.charAt(0)-'A';
+						pirates.get(p2).setRelation(p2, true);
 					}
-					System.out.print("Le pirate "+pirates.get(p).getNom()+" n'aime pas");
+					System.out.print("Le pirate "+pirates.get(p1).getNom()+" n'aime pas");
 					for(int i=0;i<pirates.size();i++) {
 						if(pirates.get(i).getRelation(i)) {
 							System.out.print(" "+pirates.get(i).getNom());
 						}
 					}
-					if(n!=-1) {
-						System.out.println("\nQui d'autre? (0 si personne d'autre)");
-					}else {
-						System.out.println("\n");
-					}
-				}while(n!=-1);
+					System.out.println("\nQui d'autre? (0 si personne d'autre)");
+				}while(p.compareTo("0")!=0);
 				break;
 			case 2:
-				for(int i=0;i<pirates.size();i++) {
-					System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
-				}
+				afficherPreferences();
 				do {
 					System.out.println("\n\nPour quel pirate voulez vous changer les préférences : ");
 					System.out.println("0 : Quitter");
-					p=sc.nextInt()-1;
-					if(p==-1)
+					p=sc.next();
+					if(p.compareTo("0")==0)
 						break;
+					p1=p.charAt(0)-'A';
 					for(int i=0;i<pirates.size();i++) {
-						System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p).getNom()+" : ");
+						System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p1).getNom()+" : ");
 						n=sc.nextInt()-1;
-						pirates.get(p).setPreference(i, tresors.get(n));
+						pirates.get(p1).setPreference(i, tresors.get(n));
 						}
-					for(int i=0;i<pirates.size();i++) {
-						System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
-					}
+					afficherPreferences();
 				}while(true);
 				}
 			
@@ -110,13 +121,9 @@ public abstract class Equipage {
 			switch(choix) {
 			case 1:
 				System.out.println("Les préferences des pirates sont :");
-				for(int i=0;i<pirates.size();i++) {
-					System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
-				}
+				afficherPreferences();
 				System.out.println("\nLes objets possédés des pirates :");
-				for(int i=0;i<pirates.size();i++) {
-					System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
-				}
+				afficherObjetsRecus();
 				System.out.println("\nPirates qui doivent échanger leur trésor :");
 				System.out.println("Pirate 1 : ");
 				ps=sc.next();
@@ -129,21 +136,9 @@ public abstract class Equipage {
 				echanger(p1,p2);
 				do {
 					System.out.println("\nLes préferences des pirates sont :");
-					for(int i=0;i<pirates.size();i++) {
-						System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
-					}
+					afficherPreferences();
 					System.out.println("\nLes objets possédés des pirates :");
-					for(int i=0;i<pirates.size();i++) {
-						System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
-					}
-					System.out.println("Les préferences des pirates sont :");
-					for(int i=0;i<pirates.size();i++) {
-						System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
-					}
-					System.out.println("\nLes objets possédés des pirates :");
-					for(int i=0;i<pirates.size();i++) {
-						System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
-					}
+					afficherObjetsRecus();
 					System.out.println("Quitter? 0:OUI 1:NON");
 					choix=sc.nextInt();
 					if(choix==0) {
@@ -160,11 +155,10 @@ public abstract class Equipage {
 					p2=pirates.get(p);
 					echanger(p1,p2);
 				}while(true);
+				break;
 			case 2:
 				System.out.println("\nLes objets possédés des pirates :");
-				for(int i=0;i<pirates.size();i++) {
-					System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
-				}
+				afficherObjetsRecus();
 				afficherCout(true);
 				break;
 			}
@@ -206,7 +200,7 @@ public abstract class Equipage {
 		int nombrePirates;
 		boolean init=true;
 		do {
-			System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) : \n");
+			System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) :");
 			nombrePirates=sc.nextInt();
 			if(nombrePirates>26 || nombrePirates<0) {
 				System.out.println("Nombre de pirates incohérent.\nRéessayer\n");
