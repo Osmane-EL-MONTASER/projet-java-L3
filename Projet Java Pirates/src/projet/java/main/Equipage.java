@@ -11,6 +11,12 @@ public abstract class Equipage {
 	public static ArrayList<Tresor> tresors = new ArrayList<>();
 	public static Scanner sc = new Scanner(System.in);
 	
+	/**
+	 * Permet d'échanger les objets reçus de 2 pirates donnés
+	 * 
+	 * @param p1 pirate 1
+	 * @param p2 pirate 2
+	 */
 	public static void echanger(Pirate p1, Pirate p2) {
 		Tresor objP1,objP2;
 		objP1=p1.getObjetRecu();
@@ -19,6 +25,11 @@ public abstract class Equipage {
 		p2.setObjetRecu(objP1);
 	}
 	
+	/**
+	 * Permet de calculer le coût de la solution actuelle
+	 * 
+	 * @return le coût de la solution actuelle
+	 */
 	public static int calculerCoutNaif() {
 		int cout = 0;
 		
@@ -33,24 +44,38 @@ public abstract class Equipage {
 		return cout;
 	}
 	
+	/**
+	 * Affiche le coût de la solution actuelle
+	 * 
+	 * @param isNaive booleen qui vaut true si la version est naïve
+	 */
 	public static void afficherCout(boolean isNaive) {
 		if(isNaive) {
 			System.out.println("Le coût naïf est "+calculerCoutNaif()+"\n");
 		}
 	}
 	
+	/**
+	 * Affiche les préférences des objets des pirates
+	 */
 	public static void afficherPreferences() {
 		for(int i=0;i<pirates.size();i++) {
 			System.out.println("Pirate "+pirates.get(i).getNom()+": "+pirates.get(i).getPreferences());
 		}
 	}
 	
+	/**
+	 * Affiche les objets que les pirates ont reçu
+	 */
 	public static void afficherObjetsRecus() {
 		for(int i=0;i<pirates.size();i++) {
 			System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
 		}
 	}
 	
+	/**
+	 * Affiche un menu pour pouvoir indiquer les relations entre les pirates ainsi que les préférences des pirates sur les trésors
+	 */
 	public static void menuRelationsPreferences() {
 		int choix,n,p1,p2;
 		String p;
@@ -108,6 +133,9 @@ public abstract class Equipage {
 		}while(choix!=3);
 	}
 	
+	/**
+	 * Affiche un menu pour pouvoir échanger les objets entre les pirates et pour afficher le coût de la solution actuelle
+	 */
 	public static void menuEchangerEtCout() {
 		Pirate p1,p2;
 		int p;
@@ -165,6 +193,9 @@ public abstract class Equipage {
 		}while(choix!=3);
 	}
 	
+	/**
+	 * Appel les méthodes pour la version naïve
+	 */
 	public static void versionNaive() {
 		initEquipageNaif();
 		menuRelationsPreferences();
@@ -172,6 +203,9 @@ public abstract class Equipage {
 		menuEchangerEtCout();
 	}
 	
+	/**
+	 * Appel les méthodes pour la version automatique
+	 */
 	public static void versionSotomatique() {
 		System.out.println("pas encore programmé\n");
 	}
@@ -195,7 +229,10 @@ public abstract class Equipage {
 		}
 	}
 	
-	//TO DO Paul
+	/**
+	 * Initialise l'équipage d'un nombre de pirates donnés.
+	 * Ajoute un pirates dans la ArrayList pirates et ajoute un trésor pour la ArrayList tresors
+	 */
 	public static void initEquipageNaif() {
 		int nombrePirates;
 		boolean init=true;
@@ -219,6 +256,7 @@ public abstract class Equipage {
 		}
 		System.out.println("\n");
 	}
+	
 	
 	public static void main(String[] args) {
 		int choix;
