@@ -279,14 +279,15 @@ public abstract class Equipage {
 		g = new GraphePirate(4, pirates);
 		
 		g.changeRelation(pirates.get(0), pirates.get(1), true);
-		
-		g.changeRelation(pirates.get(1), pirates.get(0), true);
 		g.changeRelation(pirates.get(0), pirates.get(2), true);
 		g.changeRelation(pirates.get(0), pirates.get(3), true);
 		
-		g.changeRelation(pirates.get(2), pirates.get(1), true);
+		g.changeRelation(pirates.get(1), pirates.get(0), true);
 		
-		g.changeRelation(pirates.get(3), pirates.get(1), true);
+		g.changeRelation(pirates.get(2), pirates.get(0), true);
+		
+		g.changeRelation(pirates.get(3), pirates.get(0), true);
+		
 		
 		attributionNaive();
 		afficherCout(true);
