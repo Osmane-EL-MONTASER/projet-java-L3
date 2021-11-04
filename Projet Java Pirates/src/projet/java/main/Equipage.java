@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 import javax.management.relation.RelationService;
 
+import projet.java.graphe.GraphePirate;
+
 import java.util.ArrayList;
 
 public abstract class Equipage {
@@ -10,13 +12,8 @@ public abstract class Equipage {
 	public static ArrayList<Pirate> pirates = new ArrayList<>();
 	public static ArrayList<Tresor> tresors = new ArrayList<>();
 	public static Scanner sc = new Scanner(System.in);
+	public static GraphePirate g;
 	
-	/**
-	 * Permet d'échanger les objets reçus de 2 pirates donnés
-	 * 
-	 * @param p1 pirate 1
-	 * @param p2 pirate 2
-	 */
 	public static void echanger(Pirate p1, Pirate p2) {
 		Tresor objP1,objP2;
 		objP1=p1.getObjetRecu();
@@ -25,11 +22,6 @@ public abstract class Equipage {
 		p2.setObjetRecu(objP1);
 	}
 	
-	/**
-	 * Permet de calculer le coût de la solution actuelle
-	 * 
-	 * @return le coût de la solution actuelle
-	 */
 	public static int calculerCoutNaif() {
 		int cout = 0;
 		
@@ -37,48 +29,21 @@ public abstract class Equipage {
 		//au cout total.
 		for (Pirate p : pirates) {
 			//Le pirate est jaloux donc on incrémente
-			if (p.estJaloux(pirates))
+			if (p.estJaloux(g, pirates))
 				cout++;
 		}
 		
 		return cout;
 	}
 	
-	/**
-	 * Affiche le coût de la solution actuelle
-	 * 
-	 * @param isNaive booleen qui vaut true si la version est naïve
-	 */
 	public static void afficherCout(boolean isNaive) {
 		if(isNaive) {
 			System.out.println("Le coût naïf est "+calculerCoutNaif()+"\n");
 		}
 	}
 	
-	/**
-	 * Affiche les préférences des objets des pirates
-	 */
-	public static void afficherPreferences() {
-		for(int i=0;i<pirates.size();i++) {
-			System.out.println("Pirate "+pirates.get(i).getNom()+": "+pirates.get(i).getPreferences());
-		}
-	}
-	
-	/**
-	 * Affiche les objets que les pirates ont reçu
-	 */
-	public static void afficherObjetsRecus() {
-		for(int i=0;i<pirates.size();i++) {
-			System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
-		}
-	}
-	
-	/**
-	 * Affiche un menu pour pouvoir indiquer les relations entre les pirates ainsi que les préférences des pirates sur les trésors
-	 */
 	public static void menuRelationsPreferences() {
-		int choix,n,p1,p2;
-		String p;
+		int choix,n,p;
 		do {
 			System.out.println("1 : Indiquer les relations entre les pirates\n");
 			System.out.println("2 : Indiquer les préférences des pirates sur les trésors\n");
@@ -90,52 +55,52 @@ public abstract class Equipage {
 				for(int i=0;i<pirates.size();i++) {
 					System.out.print("pirate "+(i+1)+": "+pirates.get(i).getNom()+"  ");
 				}
-				System.out.println("\n\nPour quel pirate voulez vous changer les relations :\n(indiquez un nom)");
-				p=sc.next();
-				p1=p.charAt(0)-'A';
-				System.out.println("Qui le pirate "+pirates.get(p1).getNom()+" n'aime t-il pas? (0 s'il s'entend avec tout le monde)");
+				System.out.println("\n\nPour quel pirate voulez vous changer les relations : ");
+				p=sc.nextInt()-1;
+				System.out.println("Qui le pirate "+pirates.get(p).getNom()+" n'aime t-il pas? (0 s'il s'entend avec tout le monde)");
 				do {
-					p=sc.next();
-					if(p.compareTo("0")==0) {
-						break;
-						
-					}else {
-						p2=p.charAt(0)-'A';
-						pirates.get(p2).setRelation(p2, true);
+					n=sc.nextInt()-1;
+					if(n!=-1) {
+						g.changeRelation(pirates.get(n), pirates.get(p), true);
+						g.changeRelation(pirates.get(p), pirates.get(n), true);
 					}
-					System.out.print("Le pirate "+pirates.get(p1).getNom()+" n'aime pas");
+					System.out.print("Le pirate "+pirates.get(p).getNom()+" n'aime pas");
 					for(int i=0;i<pirates.size();i++) {
-						if(pirates.get(i).getRelation(i)) {
+						if(g.getRelation(pirates.get(i), pirates.get(i))) {
 							System.out.print(" "+pirates.get(i).getNom());
 						}
 					}
-					System.out.println("\nQui d'autre? (0 si personne d'autre)");
-				}while(p.compareTo("0")!=0);
+					if(n!=-1) {
+						System.out.println("\nQui d'autre? (0 si personne d'autre)");
+					}else {
+						System.out.println("\n");
+					}
+				}while(n!=-1);
 				break;
 			case 2:
-				afficherPreferences();
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+				}
 				do {
 					System.out.println("\n\nPour quel pirate voulez vous changer les préférences : ");
 					System.out.println("0 : Quitter");
-					p=sc.next();
-					if(p.compareTo("0")==0)
+					p=sc.nextInt()-1;
+					if(p==-1)
 						break;
-					p1=p.charAt(0)-'A';
 					for(int i=0;i<pirates.size();i++) {
-						System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p1).getNom()+" : ");
+						System.out.print("Donnez la préférence "+(i+1)+" du pirate "+pirates.get(p).getNom()+" : ");
 						n=sc.nextInt()-1;
-						pirates.get(p1).setPreference(i, tresors.get(n));
+						pirates.get(p).setPreference(i, tresors.get(n));
 						}
-					afficherPreferences();
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println("Pirate "+pirates.get(i).getNom()+" : "+pirates.get(i).getPreferences());
+					}
 				}while(true);
 				}
 			
 		}while(choix!=3);
 	}
 	
-	/**
-	 * Affiche un menu pour pouvoir échanger les objets entre les pirates et pour afficher le coût de la solution actuelle
-	 */
 	public static void menuEchangerEtCout() {
 		Pirate p1,p2;
 		int p;
@@ -149,9 +114,13 @@ public abstract class Equipage {
 			switch(choix) {
 			case 1:
 				System.out.println("Les préferences des pirates sont :");
-				afficherPreferences();
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+				}
 				System.out.println("\nLes objets possédés des pirates :");
-				afficherObjetsRecus();
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+				}
 				System.out.println("\nPirates qui doivent échanger leur trésor :");
 				System.out.println("Pirate 1 : ");
 				ps=sc.next();
@@ -164,9 +133,21 @@ public abstract class Equipage {
 				echanger(p1,p2);
 				do {
 					System.out.println("\nLes préferences des pirates sont :");
-					afficherPreferences();
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+					}
 					System.out.println("\nLes objets possédés des pirates :");
-					afficherObjetsRecus();
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+					}
+					System.out.println("Les préferences des pirates sont :");
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println("Pirate "+pirates.get(i).getNom()+"("+(i+1)+") : "+pirates.get(i).getPreferences());
+					}
+					System.out.println("\nLes objets possédés des pirates :");
+					for(int i=0;i<pirates.size();i++) {
+						System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+					}
 					System.out.println("Quitter? 0:OUI 1:NON");
 					choix=sc.nextInt();
 					if(choix==0) {
@@ -183,19 +164,17 @@ public abstract class Equipage {
 					p2=pirates.get(p);
 					echanger(p1,p2);
 				}while(true);
-				break;
 			case 2:
 				System.out.println("\nLes objets possédés des pirates :");
-				afficherObjetsRecus();
+				for(int i=0;i<pirates.size();i++) {
+					System.out.println(pirates.get(i).getNom()+":"+pirates.get(i).getObjetRecu());
+				}
 				afficherCout(true);
 				break;
 			}
 		}while(choix!=3);
 	}
 	
-	/**
-	 * Appel les méthodes pour la version naïve
-	 */
 	public static void versionNaive() {
 		initEquipageNaif();
 		menuRelationsPreferences();
@@ -203,9 +182,6 @@ public abstract class Equipage {
 		menuEchangerEtCout();
 	}
 	
-	/**
-	 * Appel les méthodes pour la version automatique
-	 */
 	public static void versionSotomatique() {
 		System.out.println("pas encore programmé\n");
 	}
@@ -229,15 +205,12 @@ public abstract class Equipage {
 		}
 	}
 	
-	/**
-	 * Initialise l'équipage d'un nombre de pirates donnés.
-	 * Ajoute un pirates dans la ArrayList pirates et ajoute un trésor pour la ArrayList tresors
-	 */
+	//TO DO Paul
 	public static void initEquipageNaif() {
 		int nombrePirates;
 		boolean init=true;
 		do {
-			System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) :");
+			System.out.println("Indiquer le nombre de pirates dans l'équipage (26 max) : \n");
 			nombrePirates=sc.nextInt();
 			if(nombrePirates>26 || nombrePirates<0) {
 				System.out.println("Nombre de pirates incohérent.\nRéessayer\n");
@@ -251,15 +224,17 @@ public abstract class Equipage {
 		}while(init);
 		System.out.println("Votre équipage comporte "+nombrePirates+" pirates.\n");
 		System.out.println("leurs noms sont les suivants : ");
+		
+		g = new GraphePirate(nombrePirates, pirates);
+		
 		for(int i=0;i<nombrePirates;i++) {
 			System.out.print(pirates.get(i).getNom()+" ");
 		}
 		System.out.println("\n");
 	}
 	
-	
 	public static void main(String[] args) {
-		int choix;
+		/*int choix;
 		System.out.println("1 : Version Naive\n2 : version Sotomatique");
 		choix=sc.nextInt();
 		if(choix==1) {
@@ -270,8 +245,8 @@ public abstract class Equipage {
 			System.out.println("Option impossible\n");
 		}
 		sc.close();
-		
-		/*tresors.add(new Tresor());
+		*/
+		tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
@@ -301,27 +276,19 @@ public abstract class Equipage {
 		pirates.get(3).setPreference(2, tresors.get(1));
 		pirates.get(3).setPreference(3, tresors.get(2));
 		
-		pirates.get(0).setRelation(0, false);
-		pirates.get(0).setRelation(1, true);
-		pirates.get(0).setRelation(2, false);
-		pirates.get(0).setRelation(3, false);
+		g = new GraphePirate(4, pirates);
 		
-		pirates.get(1).setRelation(0, true);
-		pirates.get(1).setRelation(1, false);
-		pirates.get(1).setRelation(2, true);
-		pirates.get(1).setRelation(3, true);
+		g.changeRelation(pirates.get(0), pirates.get(1), true);
 		
-		pirates.get(2).setRelation(0, false);
-		pirates.get(2).setRelation(1, true);
-		pirates.get(2).setRelation(2, false);
-		pirates.get(2).setRelation(3, false);
+		g.changeRelation(pirates.get(1), pirates.get(0), true);
+		g.changeRelation(pirates.get(0), pirates.get(2), true);
+		g.changeRelation(pirates.get(0), pirates.get(3), true);
 		
-		pirates.get(3).setRelation(0, false);
-		pirates.get(3).setRelation(1, true);
-		pirates.get(3).setRelation(2, false);
-		pirates.get(3).setRelation(3, false);
+		g.changeRelation(pirates.get(2), pirates.get(1), true);
+		
+		g.changeRelation(pirates.get(3), pirates.get(1), true);
 		
 		attributionNaive();
-		afficherCout(true);*/
+		afficherCout(true);
 	}
 }
