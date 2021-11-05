@@ -4,6 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+/**
+ * Cette classe générique permet de représenter tout type 
+ * de graphe.
+ * Il faut préciser le type de chaque sommet du graphe.
+ * 
+ * @version 1.0.0
+ * @since 2.0.0
+ * 
+ * @param <T> Représente le type de chaque sommet du 
+ * graphe
+ */
 public class Graph<T> {
 	//Une matrice d'adjacence.
 	protected LinkedHashMap<Vertex<T, T>, Boolean> adjacency;
