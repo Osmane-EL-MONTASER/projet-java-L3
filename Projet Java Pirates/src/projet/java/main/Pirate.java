@@ -2,11 +2,12 @@ package projet.java.main;
 
 import java.util.ArrayList;
 
+import projet.java.graphe.GraphePirate;
+
 public class Pirate {
 	private static char n = 'A';
 	
 	private char nom;
-	private ArrayList<Boolean> relations;
 	private ArrayList<Tresor> preferences;
 	private Tresor objetRecu;
 	
@@ -16,23 +17,19 @@ public class Pirate {
 		else {
 			nom=n++;
 			
-			relations = new ArrayList<>();
 			preferences = new ArrayList<>();
 			
-			for (int i = 0; i < totalPirates; i++)
-				relations.add(false);
 			for (int i = 0; i < totalPirates; i++)
 				preferences.add(null);
 		}
 		
 	}
 	
-	public boolean relationAvec(Pirate p) {
-		int indexOfPirate = p.getNom() - 'A';
-		return relations.get(indexOfPirate);
+	public boolean relationAvec(GraphePirate g, Pirate p) {
+		return g.getRelation(this, p);
 	}
 	
-	public boolean estJaloux(ArrayList<Pirate> pirates) {
+	public boolean estJaloux(GraphePirate g, ArrayList<Pirate> pirates) {
 		boolean isJaloux = false;
 		
 		//S'il a recu ce qu'il voulait, il n'est 
@@ -57,7 +54,7 @@ public class Pirate {
 				//Le pirate est en effet dans
 				//de mauvaises relations avec
 				//ce pirate
-				if (relationAvec(pirates.get(i)))
+				if (relationAvec(g, pirates.get(i)))
 					isJaloux = true;
 			}
 		}
@@ -65,12 +62,6 @@ public class Pirate {
 		return isJaloux;
 	}
 	
-	public ArrayList<Boolean> getRelations() {
-		return relations;
-	}
-	public boolean getRelation(int i) {
-		return relations.get(i);
-	}
 	public ArrayList<Tresor> getPreferences() {
 		return preferences;
 	}
@@ -87,11 +78,29 @@ public class Pirate {
 		this.objetRecu = objetRecu;
 	}
 	
-	public void setRelation(int i, boolean b) {
-		relations.set(i, b);
-	}
-	
 	public void setPreference(int i, Tresor t) {
 		preferences.set(i, t);
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+        if (o == this)
+        	return true;
+        
+        if (!(o instanceof Pirate))
+            return false;
+        
+        Pirate c = (Pirate) o;
+        
+        return c.getNom() == this.nom;
+	}
+	
+	@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + (this.getNom());
+        return result;
+    }
 }

@@ -39,7 +39,7 @@ public abstract class Equipage {
 		//au cout total.
 		for (Pirate p : pirates) {
 			//Le pirate est jaloux donc on incrémente
-			if (p.estJaloux(pirates))
+			if (p.estJaloux(g, pirates))
 				cout++;
 		}
 		
@@ -103,11 +103,12 @@ public abstract class Equipage {
 						
 					}else {
 						p2=p.charAt(0)-'A';
-						pirates.get(p2).setRelation(p2, true);
+						g.changeRelation(pirates.get(p2), pirates.get(p1), true);
+						g.changeRelation(pirates.get(p1), pirates.get(p2), true);
 					}
 					System.out.print("Le pirate "+pirates.get(p1).getNom()+" n'aime pas");
 					for(int i=0;i<pirates.size();i++) {
-						if(pirates.get(i).getRelation(i)) {
+						if(g.getRelation(pirates.get(i), pirates.get(i))) {
 							System.out.print(" "+pirates.get(i).getNom());
 						}
 					}
