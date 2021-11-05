@@ -103,12 +103,11 @@ public abstract class Equipage {
 						
 					}else {
 						p2=p.charAt(0)-'A';
-						g.changeRelation(pirates.get(p2), pirates.get(p1), true);
-						g.changeRelation(pirates.get(p1), pirates.get(p2), true);
+						g.addEdge(pirates.get(p2), pirates.get(p1));
 					}
 					System.out.print("Le pirate "+pirates.get(p1).getNom()+" n'aime pas");
 					for(int i=0;i<pirates.size();i++) {
-						if(g.getRelation(pirates.get(i), pirates.get(i))) {
+						if(g.isEdgeExists(pirates.get(i), pirates.get(i))) {
 							System.out.print(" "+pirates.get(i).getNom());
 						}
 					}
@@ -306,15 +305,9 @@ public abstract class Equipage {
 		
 		g = new GraphePirate(4, pirates);
 		
-		g.changeRelation(pirates.get(0), pirates.get(1), true);
-		g.changeRelation(pirates.get(0), pirates.get(2), true);
-		g.changeRelation(pirates.get(0), pirates.get(3), true);
-		
-		g.changeRelation(pirates.get(1), pirates.get(0), true);
-		
-		g.changeRelation(pirates.get(2), pirates.get(0), true);
-		
-		g.changeRelation(pirates.get(3), pirates.get(0), true);
+		g.addEdge(pirates.get(0), pirates.get(1));
+		g.addEdge(pirates.get(0), pirates.get(2));
+		g.addEdge(pirates.get(0), pirates.get(3));
 		
 		
 		attributionNaive();

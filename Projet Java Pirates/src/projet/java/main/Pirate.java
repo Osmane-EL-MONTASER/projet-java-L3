@@ -26,7 +26,7 @@ public class Pirate {
 	}
 	
 	public boolean relationAvec(GraphePirate g, Pirate p) {
-		return g.getRelation(this, p);
+		return g.isEdgeExists(this, p);
 	}
 	
 	public boolean estJaloux(GraphePirate g, ArrayList<Pirate> pirates) {
@@ -103,4 +103,14 @@ public class Pirate {
                 + (this.getNom());
         return result;
     }
+	
+	/**
+	 * Retourne le nom du pirate.
+	 * 
+	 * @since 3.0.0
+	 */
+	@Override
+	public String toString() {
+		return Character.toString(nom);
+	}
 }
