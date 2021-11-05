@@ -291,5 +291,7 @@ public abstract class Equipage {
 		
 		attributionNaive();
 		afficherCout(true);
+		
+		System.out.println(g);
 	}
 }

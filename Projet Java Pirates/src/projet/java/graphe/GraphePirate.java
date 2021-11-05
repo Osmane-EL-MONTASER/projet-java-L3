@@ -49,17 +49,4 @@ public class GraphePirate {
 		
 		return str;
 	}
-	
-	public static void main(String args[]) {
-		ArrayList<Pirate> pirates = new ArrayList<>();
-		pirates.add(new Pirate(4));
-		pirates.add(new Pirate(4));
-		pirates.add(new Pirate(4));
-		pirates.add(new Pirate(4));
-		GraphePirate g = new GraphePirate(2, pirates);
-		
-		System.out.println(g);
-		g.changeRelation(pirates.get(0), pirates.get(1), true);
-		System.out.println(g.getRelation(pirates.get(0), pirates.get(0)));
-	}
 }
