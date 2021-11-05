@@ -1,7 +1,7 @@
 package projet.java.main;
 import java.util.Scanner;
 
-import javax.management.relation.RelationService;
+import projet.java.graphe.GraphePirate;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ public abstract class Equipage {
 	public static ArrayList<Pirate> pirates = new ArrayList<>();
 	public static ArrayList<Tresor> tresors = new ArrayList<>();
 	public static Scanner sc = new Scanner(System.in);
+	
+	public static GraphePirate g;
 	
 	/**
 	 * Permet d'échanger les objets reçus de 2 pirates donnés
@@ -259,7 +261,7 @@ public abstract class Equipage {
 	
 	
 	public static void main(String[] args) {
-		int choix;
+		/*int choix;
 		System.out.println("1 : Version Naive\n2 : version Sotomatique");
 		choix=sc.nextInt();
 		if(choix==1) {
@@ -270,8 +272,8 @@ public abstract class Equipage {
 			System.out.println("Option impossible\n");
 		}
 		sc.close();
-		
-		/*tresors.add(new Tresor());
+		*/
+		tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
 		tresors.add(new Tresor());
@@ -301,27 +303,22 @@ public abstract class Equipage {
 		pirates.get(3).setPreference(2, tresors.get(1));
 		pirates.get(3).setPreference(3, tresors.get(2));
 		
-		pirates.get(0).setRelation(0, false);
-		pirates.get(0).setRelation(1, true);
-		pirates.get(0).setRelation(2, false);
-		pirates.get(0).setRelation(3, false);
+		g = new GraphePirate(4, pirates);
 		
-		pirates.get(1).setRelation(0, true);
-		pirates.get(1).setRelation(1, false);
-		pirates.get(1).setRelation(2, true);
-		pirates.get(1).setRelation(3, true);
+		g.changeRelation(pirates.get(0), pirates.get(1), true);
+		g.changeRelation(pirates.get(0), pirates.get(2), true);
+		g.changeRelation(pirates.get(0), pirates.get(3), true);
 		
-		pirates.get(2).setRelation(0, false);
-		pirates.get(2).setRelation(1, true);
-		pirates.get(2).setRelation(2, false);
-		pirates.get(2).setRelation(3, false);
+		g.changeRelation(pirates.get(1), pirates.get(0), true);
 		
-		pirates.get(3).setRelation(0, false);
-		pirates.get(3).setRelation(1, true);
-		pirates.get(3).setRelation(2, false);
-		pirates.get(3).setRelation(3, false);
+		g.changeRelation(pirates.get(2), pirates.get(0), true);
+		
+		g.changeRelation(pirates.get(3), pirates.get(0), true);
+		
 		
 		attributionNaive();
-		afficherCout(true);*/
+		afficherCout(true);
+		
+		System.out.println(g);
 	}
 }
