@@ -31,6 +31,6 @@ public class PirateEdge extends Edge<Pirate> {
 	 */
 	@Override
 	public String toString() {
-		return "Les pirates " + v1 + " et " + v2 + " ne s'aiment pas.";
+		return "Les pirates " + v1 + " (" + v1.getId() + ") et " + v2 + " (" + v2.getId() + ") ne s'aiment pas.";
 	}
 }

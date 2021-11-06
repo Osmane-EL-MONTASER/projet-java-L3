@@ -1,6 +1,7 @@
 package project.crew.graph;
 
 import project.crew.Pirate;
+import project.crew.Treasure;
 import project.graph.Edge;
 import project.graph.Graph;
 import project.graph.Vertex;
@@ -11,9 +12,7 @@ import project.graph.exceptions.EdgeNotFoundException;
  * hérite de la classe Graph.
  * 
  * @author EL MONTASER Osmane
- * @param <T> The label's type of the vertices
  * 
- * @author EL MONTASER Osmane
  * @version 1.0
  * @since 2.0
  */
@@ -48,10 +47,19 @@ public class PirateGraph extends Graph<Pirate> {
 	public String toString() {
 		String str = new String();
 		
+		str += "-----------------------------------------\n";
 		str += "Liste des pirates : \n";
-		for(Vertex<Pirate> v : vertices)
-			str += new PirateVertex(v.getLabel()) + "\n";
 		
+		for(Vertex<Pirate> v : vertices) {
+			str += new PirateVertex(v.getLabel()) + " (" + v.getId() + "), ses préférences -->  ";
+			
+			for(Treasure t : v.getLabel().getPreferences())
+				str += t + " (" + t.getId() + ") ; ";
+			
+			str += "\n";
+		}
+		
+		str += "\n-----------------------------------------\n";
 		str += "Liste des relations entre les pirates :\n";
 		for(Edge<Pirate> e : edges)
 			str += new PirateEdge(e.getV1(), e.getV2()) + "\n";

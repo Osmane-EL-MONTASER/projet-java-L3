@@ -14,7 +14,7 @@ public class EdgeDuplicateException extends Exception {
 	/**
 	 * Calls super() constructor of Exception.
 	 * 
-	 * @param errorMessage
+	 * @param errorMessage Message of the exception.
 	 */
 	public EdgeDuplicateException(String errorMessage) {
         super(errorMessage);

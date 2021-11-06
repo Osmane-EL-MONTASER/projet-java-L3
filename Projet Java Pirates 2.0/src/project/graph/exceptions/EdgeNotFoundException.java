@@ -13,7 +13,7 @@ public class EdgeNotFoundException extends Exception {
 	/**
 	 * Calls super() constructor of Exception.
 	 * 
-	 * @param errorMessage
+	 * @param errorMessage Message of the exception.
 	 */
 	public EdgeNotFoundException(String errorMessage) {
         super(errorMessage);

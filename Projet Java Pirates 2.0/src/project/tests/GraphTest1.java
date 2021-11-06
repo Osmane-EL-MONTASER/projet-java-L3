@@ -1,5 +1,7 @@
-package project.crew;
+package project.tests;
 
+import project.crew.Pirate;
+import project.crew.Treasure;
 import project.crew.graph.PirateGraph;
 import project.crew.graph.PirateVertex;
 
@@ -20,9 +22,9 @@ public class GraphTest1 {
 	public static void main(String args[]) {
 		PirateGraph pg = new PirateGraph();
 		
-		pg.addVertex(new PirateVertex(new Pirate("Pirate 0")));
-		pg.addVertex(new PirateVertex(new Pirate("Pirate 1")));
-		pg.addVertex(new PirateVertex(new Pirate("Pirate 2")));
+		pg.addVertex(new PirateVertex(new Pirate("Pirate 0", new Treasure[] {})));
+		pg.addVertex(new PirateVertex(new Pirate("Pirate 1", new Treasure[] {})));
+		pg.addVertex(new PirateVertex(new Pirate("Pirate 2", new Treasure[] {})));
 		
 		try {
 			pg.addEdge(0, 1);

@@ -1,6 +1,7 @@
 package project.graph;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import project.graph.exceptions.EdgeDuplicateException;
 import project.graph.exceptions.EdgeNotFoundException;
@@ -139,5 +140,25 @@ public class Graph<T> {
 			throw(new VertexNotFoundException("The given vertex doesn't exist."));
 		
 		return vertices.get(i);
+	}
+	
+	/**
+	 * Get the number of vertices in the graph.
+	 * @return The order of the graph.
+	 */
+	public int getOrder() {
+		return vertices.size();
+	}
+	
+	/**
+	 * Algorithm of Welsh and Powell to get a list of list of vertices
+	 * sorted by color. A color is represented as an integer.
+	 * 
+	 * @deprecated
+	 * @return A LinkedHashMap which contains lists of vertices for each
+	 * color of the graph. 
+	 */
+	public LinkedHashMap<Integer, ArrayList<T>> welshPowell() {
+		return null;
 	}
 }

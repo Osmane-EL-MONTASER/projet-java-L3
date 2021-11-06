@@ -13,7 +13,7 @@ public class VertexNotFoundException extends Exception {
 	/**
 	 * Calls super() constructor of Exception.
 	 * 
-	 * @param errorMessage
+	 * @param errorMessage Message of the exception.
 	 */
 	public VertexNotFoundException(String errorMessage) {
         super(errorMessage);
