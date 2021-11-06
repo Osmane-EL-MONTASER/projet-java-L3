@@ -2,6 +2,15 @@ package projet.java.graphe;
 
 import projet.java.main.Pirate;
 
+/**
+ * Représente un sommet d'un graphe. A utiliser
+ * de concours avec la classe Graph.
+ * 
+ * @author EL MONTASER Osmane
+ *
+ * @param <K1> Le type du sommet 
+ * @param <K2>
+ */
 public class Vertex<K1, K2> {
 	private K1 k1;
 	private K2 k2;

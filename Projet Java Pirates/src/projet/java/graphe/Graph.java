@@ -96,7 +96,7 @@ public class Graph<T> {
 	 * @since 1.0
 	 */
 	@Override
-	public String toString() {
+	public String toString() {_
 		String str = new String();
 		int i = 0;
 		
