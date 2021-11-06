@@ -26,7 +26,7 @@ public class NaiveSharing {
 	 * 
 	 * @param c L'équipage avec son attribution déjà finie.
 	 * @param treasures Le tableau des trésors du butin.
-	 * @return
+	 * @return Le coût naïf.
 	 */
 	public static double getNaiveCost(Crew c, Treasure[] treasures) {
 		double cost = 0.d;
@@ -69,7 +69,7 @@ public class NaiveSharing {
 	 * @param c L'équipage sur lequel faire l'attribution naïve.
 	 * @param remainingTreasures Les trésors restants à distribuer.
 	 * @param i L'index du pirate à qui attribuer le butin.
-	 * @return
+	 * @return La liste des trésors attribué à chaque pirate.
 	 */
 	public static LinkedHashMap<PirateVertex, Treasure> naiveAttribution(Crew c, ArrayList<Treasure> remainingTreasures, int i) {
 		LinkedHashMap<PirateVertex, Treasure> attributions = new LinkedHashMap<>();
