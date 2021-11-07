@@ -10,6 +10,7 @@ import project.graph.Vertex;
  * générqiues.
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * @version 1.0
  * @since 2.0
  */

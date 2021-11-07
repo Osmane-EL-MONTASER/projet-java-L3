@@ -12,6 +12,7 @@ import project.graph.exceptions.EdgeNotFoundException;
  * hérite de la classe Graph.
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * 
  * @version 1.0
  * @since 2.0
@@ -53,8 +54,9 @@ public class PirateGraph extends Graph<Pirate> {
 		for(Vertex<Pirate> v : vertices) {
 			str += new PirateVertex(v.getLabel()) + " (" + v.getId() + "), ses préférences -->  ";
 			
-			for(Treasure t : v.getLabel().getPreferences())
-				str += t + " (" + t.getId() + ") ; ";
+			if(v.getLabel().getPreferences() != null)
+				for(Treasure t : v.getLabel().getPreferences())
+					str += t + " (" + t.getId() + ") ; ";
 			
 			str += "\n";
 		}

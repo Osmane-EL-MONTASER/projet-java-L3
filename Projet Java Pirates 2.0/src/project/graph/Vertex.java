@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * @param <T> The type of the label.
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * @version 1.0
  * @since 2.0
  * 

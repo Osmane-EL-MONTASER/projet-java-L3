@@ -5,6 +5,7 @@ import project.graph.Vertex;
 
 /**
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  *
  */
 public class PirateVertex extends Vertex<Pirate> {

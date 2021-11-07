@@ -6,6 +6,7 @@ package project.crew;
  * l'ordre croissant.
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * @version 2.0
  * @since 1.0
  */
@@ -27,6 +28,10 @@ public class Pirate {
 	
 	public Treasure[] getPreferences() {
 		return preferences;
+	}
+	
+	public void setPreferences(Treasure[] preferences) {
+		this.preferences = preferences;
 	}
 	
 	@Override

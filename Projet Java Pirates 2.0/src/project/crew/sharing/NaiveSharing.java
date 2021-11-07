@@ -15,6 +15,7 @@ import project.graph.exceptions.VertexNotFoundException;
  * au calcul d'une solution naïve.
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * @version 1.0
  * @since 2.0
  */

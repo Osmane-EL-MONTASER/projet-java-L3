@@ -11,10 +11,10 @@ import project.graph.exceptions.VertexNotFoundException;
  * This class represents a graph with a list of
  * vertices and edges.
  * 
- * @author EL MONTASER Osmane
  * @param <T> The label's type of the vertices
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * @version 1.0
  * @since 2.0
  */
@@ -84,11 +84,11 @@ public class Graph<T> {
 	/**
 	 * Know if a given vertex exists in the graph.
 	 * 
-	 * @param v The vertex to find.
+	 * @param v The index of the vertex to find.
 	 * @return True if the vertex exists, False otherwise.
 	 */
-	public boolean isVertexExists(Vertex<T> v) {
-		return vertices.contains(v);
+	public boolean isVertexExists(int v) {
+		return (v >= 0 && v < vertices.size());
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class Graph<T> {
 	 * exist in the graph.
 	 */
 	public boolean isEdgeExists(Vertex<T> v1, Vertex<T> v2) throws IllegalArgumentException {
-		if (!isVertexExists(v1) || !isVertexExists(v2))
+		if (!isVertexExists(v1.getId()) || !isVertexExists(v2.getId()))
 			throw(new IllegalArgumentException("One of the vertices doesn't exist!"));
 		
 		return (edges.contains(new Edge<T>(v1, v2)) || edges.contains(new Edge<T>(v2, v1)));

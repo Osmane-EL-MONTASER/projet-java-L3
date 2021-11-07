@@ -4,6 +4,7 @@ package project.crew;
  * Représente un trésor de l'équipage.
  * 
  * @author EL MONTASER Osmane
+ * @author VIDART Paul
  * @version 2.0
  * @since 1.0
  */
