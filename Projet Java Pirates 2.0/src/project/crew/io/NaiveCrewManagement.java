@@ -53,21 +53,29 @@ public class NaiveCrewManagement {
 	 * @param c
 	 */
 	private static void swapTreasures(Crew c) {
-		int i, j;
-		do {
-			System.out.println("-- Échange de trésors --");
-			System.out.print("Premier pirate (lettre) --> ");
-			
-			i = sc.next().charAt(0) - 'A';
-			
-		} while(!c.getGraph().isVertexExists(i));
+		int i = 0, j = 0;
+		try {
+			do {
+				System.out.println("-- Échange de trésors --");
+				System.out.print("Premier pirate (lettre) --> ");
+				
+				i = sc.next().charAt(0) - 'A';
+				
+			} while(!c.getGraph().isVertexExists(c.getGraph().getVertex(i)));
+		} catch (VertexNotFoundException e2) {
+			e2.printStackTrace();
+		}
 		
-		do {
-			System.out.println("-- Échange de trésors --");
-			System.out.print("Deuxième pirate (lettre) --> ");
-			
-			j = sc.next().charAt(0) - 'A';
-		} while(!c.getGraph().isVertexExists(j));
+		try {
+			do {
+				System.out.println("-- Échange de trésors --");
+				System.out.print("Deuxième pirate (lettre) --> ");
+				
+				j = sc.next().charAt(0) - 'A';
+			} while(!c.getGraph().isVertexExists(c.getGraph().getVertex(j)));
+		} catch (VertexNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
 		try {
 			Treasure t1 = c.getAttributions().get(c.getGraph().getVertex(i));

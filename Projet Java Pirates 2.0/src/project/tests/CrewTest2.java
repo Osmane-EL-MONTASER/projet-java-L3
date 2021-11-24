@@ -8,6 +8,7 @@ import project.crew.Pirate;
 import project.crew.Treasure;
 import project.crew.sharing.NaiveSharing;
 import project.graph.exceptions.EdgeDuplicateException;
+import project.graph.exceptions.VertexNotFoundException;
 
 /**
  * Crée un équipage de 4 personnes représentant la situation
@@ -20,7 +21,7 @@ import project.graph.exceptions.EdgeDuplicateException;
  * @since 2.0
  */
 public class CrewTest2 {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws VertexNotFoundException {
 		Crew c = new Crew();
 		
 		Treasure[] treasures = {

@@ -36,6 +36,10 @@ public class Treasure {
 		return id;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	/**
 	 * Donne le nom du trésor seulement.
 	 */

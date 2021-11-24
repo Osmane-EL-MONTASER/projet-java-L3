@@ -1,9 +1,11 @@
 package project.crew;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import project.crew.graph.PirateGraph;
 import project.crew.graph.PirateVertex;
+import project.graph.Vertex;
 import project.graph.exceptions.EdgeDuplicateException;
 import project.graph.exceptions.VertexNotFoundException;
 
@@ -13,29 +15,56 @@ import project.graph.exceptions.VertexNotFoundException;
  * 
  * @author EL MONTASER Osmane
  * @author VIDART Paul
- * @version 1.0
+ * @version 2.0
  * @since 2.0
  */
 public class Crew {
-	PirateGraph pg;
-	LinkedHashMap<PirateVertex, Treasure> attributions;
+	private PirateGraph pg;
+	private LinkedHashMap<PirateVertex, Treasure> attributions;
+	private Treasure treasures[];
+	private ArrayList<Vertex<Pirate>> jealousPirates;
 	
 	/**
 	 * Initialise le graphe de pirates et la liste des 
 	 * attributions.
+	 * @since 1.0
 	 */
 	public Crew() {
 		pg = new PirateGraph();
 		attributions = new LinkedHashMap<>();
+		jealousPirates = new ArrayList<>();
+	}
+	
+	public ArrayList<Vertex<Pirate>> getJealousPirates() {
+		return jealousPirates;
+	}
+	
+	public void setJealousPirate(ArrayList<Vertex<Pirate>> jealousPirates) {
+		this.jealousPirates = jealousPirates;
 	}
 	
 	/**
 	 * Ajoute un membre dans l'équipage.
 	 * 
 	 * @param p Le pirate à ajouter dans l'équipage.
+	 * @since 1.0
 	 */
 	public void addCrewMember(Pirate p) {
 		pg.addVertex(new PirateVertex(p));
+	}
+	
+	/**
+	 * Supprime un membre dans l'équipage.
+	 * 
+	 * @param i Le pirate à ajouter dans l'équipage.
+	 * @since 2.0
+	 */
+	public void deleteCrewMember(int i) {
+		try {
+			pg.deleteVertex(pg.getVertex(i));
+		} catch (VertexNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -49,10 +78,12 @@ public class Crew {
 	 * présent dans l'équipage.
 	 * @throws EdgeDuplicateException Si les pirates s'entendent
 	 * déjà mal.
+	 * @throws VertexNotFoundException 
+	 * @since 1.0
 	 */
-	public void addBadRelations(int i, int j) throws IllegalArgumentException, EdgeDuplicateException {
+	public void addBadRelations(int i, int j) throws IllegalArgumentException, EdgeDuplicateException, VertexNotFoundException {
 		try {
-			pg.addEdge(i, j);
+			pg.addEdge(pg.getVertex(i), pg.getVertex(j));
 		} catch(IllegalArgumentException e) {
 			throw(e);
 		}
@@ -67,6 +98,7 @@ public class Crew {
 	 * @return True si les pirates ne s'entendent pas, False sinon.
 	 * @throws VertexNotFoundException Si un des pirates n'est pas 
 	 * présent dans l'équipage.
+	 * @since 1.0
 	 */
 	public boolean haveBadRelations(int i, int j)  throws VertexNotFoundException {
 		return pg.isEdgeExists(pg.getVertex(i), pg.getVertex(j));
@@ -77,6 +109,7 @@ public class Crew {
 	 * relations.
 	 * 
 	 * @return Un graphe de l'équipage.
+	 * @since 1.0
 	 */
 	public PirateGraph getGraph() {
 		return pg;
@@ -87,6 +120,7 @@ public class Crew {
 	 * automatiquement.
 	 * 
 	 * @return Les attributions du butin.
+	 * @since 1.0
 	 */
 	public LinkedHashMap<PirateVertex, Treasure> getAttributions() {
 		return attributions;
@@ -96,8 +130,31 @@ public class Crew {
 	 * Distribuer le butin.
 	 * 
 	 * @param attributions les attributions à remplacer.
+	 * @since 1.0
 	 */
 	public void setAttributions(LinkedHashMap<PirateVertex, Treasure> attributions) {
 		this.attributions = attributions;
+	}
+	
+	public Treasure[] getTreasures() {
+		return treasures;
+	}
+	
+	public void setTreasures(Treasure[] treasures) {
+		this.treasures = treasures;
+	}
+	
+	@Override
+	public String toString() {
+		String str = new String();
+		
+		str += pg;
+		str += "\nLes trésors à partager :\n";
+		
+		if(treasures != null)
+			for(Treasure t : treasures)
+				str += "- " + t + ".\n";
+		
+		return str;
 	}
 }

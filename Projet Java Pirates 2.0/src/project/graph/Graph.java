@@ -40,6 +40,26 @@ public class Graph<T> {
 	}
 	
 	/**
+	 * Deletes a vertex in the graph
+	 * 
+	 * @param v Vertex T to delete.
+	 */
+	public void deleteVertex(Vertex<T> v) {
+		vertices.remove(v);
+		for (Edge<T> e : edges)
+			if (e.getV1() == v || e.getV2() == v)
+				edges.remove(e);
+	}
+	
+	public ArrayList<Vertex<T>> getVertices() {
+		return vertices;
+	}
+	
+	public ArrayList<Edge<T>> getEdges() {
+		return edges;
+	}
+	
+	/**
 	 * Adds an edge between a vertex at index v1 and a vertex at index v2 with a given 
 	 * weight. No edge duplicates allowed.
 	 * 
@@ -81,14 +101,21 @@ public class Graph<T> {
 		edges.add(new Edge<T>(vertices.get(v1), vertices.get(v2)));
 	}
 	
+	public void addEdge(Vertex<T> v1, Vertex<T> v2) throws EdgeDuplicateException, IllegalArgumentException {
+		if(isEdgeExists(v1, v2))
+			throw(new EdgeDuplicateException("Cannot add edge because there is already one between these vertices!"));
+		
+		edges.add(new Edge<T>(v1, v2));
+	}
+	
 	/**
 	 * Know if a given vertex exists in the graph.
 	 * 
 	 * @param v The index of the vertex to find.
 	 * @return True if the vertex exists, False otherwise.
 	 */
-	public boolean isVertexExists(int v) {
-		return (v >= 0 && v < vertices.size());
+	public boolean isVertexExists(Vertex<T> v) {
+		return (vertices.contains(v));
 	}
 	
 	/**
@@ -101,7 +128,7 @@ public class Graph<T> {
 	 * exist in the graph.
 	 */
 	public boolean isEdgeExists(Vertex<T> v1, Vertex<T> v2) throws IllegalArgumentException {
-		if (!isVertexExists(v1.getId()) || !isVertexExists(v2.getId()))
+		if (!isVertexExists(v1) || !isVertexExists(v2))
 			throw(new IllegalArgumentException("One of the vertices doesn't exist!"));
 		
 		return (edges.contains(new Edge<T>(v1, v2)) || edges.contains(new Edge<T>(v2, v1)));

@@ -1,0 +1,11 @@
+pirate(Edward Teach).
+pirate(Olivier Levasseur).
+pirate(Nicolas Loménie).
+objet(Le St Grall).
+objet(L'épée).
+objet(Objet 3).
+deteste(Edward Teach, Nicolas Loménie).
+deteste(Olivier Levasseur, Nicolas Loménie).
+preferences(Edward Teach, Le St Grall, L'épée, Objet 3).
+preferences(Olivier Levasseur, Le St Grall, Objet 3, L'épée).
+preferences(Nicolas Loménie, Objet 3, Le St Grall, L'épée).

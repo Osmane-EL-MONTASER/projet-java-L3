@@ -34,6 +34,14 @@ public class Pirate {
 		this.preferences = preferences;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public String toString() {
 		String str = new String();

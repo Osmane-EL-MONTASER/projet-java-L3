@@ -6,8 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import project.crew.Crew;
+import project.crew.Pirate;
 import project.crew.Treasure;
 import project.crew.graph.PirateVertex;
+import project.graph.Vertex;
 import project.graph.exceptions.VertexNotFoundException;
 
 /**
@@ -31,7 +33,6 @@ public class NaiveSharing {
 	 */
 	public static double getNaiveCost(Crew c, Treasure[] treasures) {
 		double cost = 0.d;
-		
 		for(Map.Entry<PirateVertex, Treasure> a : c.getAttributions().entrySet()) {
 			boolean alreadyJealous = false;
 			int attributionRank = Arrays.asList(a.getKey().getLabel().getPreferences()).indexOf(a.getValue());
@@ -61,6 +62,38 @@ public class NaiveSharing {
 		return cost;
 	}
 	
+	public static ArrayList<Vertex<Pirate>> getJealous(Crew c, Treasure[] treasures) {
+		ArrayList<Vertex<Pirate>> jealous = new ArrayList<>();
+		
+		for(Map.Entry<PirateVertex, Treasure> a : c.getAttributions().entrySet()) {
+			boolean alreadyJealous = false;
+			int attributionRank = Arrays.asList(a.getKey().getLabel().getPreferences()).indexOf(a.getValue());
+			
+			//Si le pirate n'a pas eu ce qu'il voulait
+			if(!(a.getKey().getLabel().getPreferences()[0] == a.getValue())) {
+				//Regarder si il n'y a pas un pirate qui aurait reçu un objet qu'il aurait préféré
+				//tout en sachant que le pirate ne peut être jaloux qu'une seule fois.
+				for(int i = 0; i < attributionRank && !alreadyJealous; i++) {
+					Treasure wish = Arrays.asList(treasures).get(Arrays.asList(treasures).indexOf(a.getKey().getLabel().getPreferences()[i]));
+					
+					for(int j = 0; j < c.getGraph().getOrder() && !alreadyJealous; j++) {
+						try {
+							//Si les pirates sont en mauvaises relations et qu'il a un objet qu'il aurait préféré.
+							if(c.haveBadRelations(a.getKey().getId(), j) && wish == c.getAttributions().get(c.getGraph().getVertex(j))) {
+								alreadyJealous = true;
+								jealous.add(a.getKey());
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		
+		return jealous;
+	}
+	
 	/**
 	 * Fait une attribution automatique mais naïve en attribuant
 	 * le dernier trésor disponible préféré au pirate. 
@@ -85,7 +118,7 @@ public class NaiveSharing {
 		
 		if(i < c.getGraph().getOrder() - 1)
 			attributions.putAll(naiveAttribution(c, remainingTreasures, ++i));
-		
+
 		return attributions;
 	}
 	

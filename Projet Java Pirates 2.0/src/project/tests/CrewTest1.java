@@ -4,6 +4,7 @@ import project.crew.Crew;
 import project.crew.Pirate;
 import project.crew.Treasure;
 import project.graph.exceptions.EdgeDuplicateException;
+import project.graph.exceptions.VertexNotFoundException;
 
 /**
  * Crée un équipage de 2 personnes qui ne s'aiment pas
@@ -14,7 +15,7 @@ import project.graph.exceptions.EdgeDuplicateException;
  * @since 2.0
  */
 public class CrewTest1 {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws VertexNotFoundException {
 		Crew c = new Crew();
 		
 		Treasure[] treasures = {

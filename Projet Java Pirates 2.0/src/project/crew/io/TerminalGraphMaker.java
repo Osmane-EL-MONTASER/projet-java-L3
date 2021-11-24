@@ -116,25 +116,33 @@ public class TerminalGraphMaker {
 	}
 	
 	private static void addRelation() {
-		int i, j;
-		do {
-			System.out.println("-- Ajout d'une relation --");
-			System.out.print("Premier pirate (lettre) --> ");
-			
-			i = sc.next().charAt(0) - 'A';
-			
-		} while(!c.getGraph().isVertexExists(i));
+		int i = 0, j = 0;
+		try {
+			do {
+				System.out.println("-- Ajout d'une relation --");
+				System.out.print("Premier pirate (lettre) --> ");
+				
+				i = sc.next().charAt(0) - 'A';
+				
+			} while(!c.getGraph().isVertexExists(c.getGraph().getVertex(i)));
+		} catch (VertexNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
-		do {
-			System.out.println("-- Ajout d'une relation --");
-			System.out.print("Deuxième pirate (lettre) --> ");
-			
-			j = sc.next().charAt(0) - 'A';
-		} while(!c.getGraph().isVertexExists(j));
+		try {
+			do {
+				System.out.println("-- Ajout d'une relation --");
+				System.out.print("Deuxième pirate (lettre) --> ");
+				
+				j = sc.next().charAt(0) - 'A';
+			} while(!c.getGraph().isVertexExists(c.getGraph().getVertex(j)));
+		} catch (VertexNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
 		try {
 			c.addBadRelations(i, j);
-		} catch (IllegalArgumentException | EdgeDuplicateException e) {
+		} catch (IllegalArgumentException | EdgeDuplicateException | VertexNotFoundException e) {
 			e.printStackTrace();
 		}
 		
