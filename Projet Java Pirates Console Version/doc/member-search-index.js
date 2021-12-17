@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"project.crew.sharing","c":"BetterSharing","l":"BetterSharing()","url":"%3Cinit%3E()"},{"p":"project.crew.sharing","c":"BetterSharing","l":"doBetterSharing(Crew)","url":"doBetterSharing(project.crew.Crew)"},{"p":"project.crew.sharing","c":"BetterSharing","l":"doShuffleSharing(Crew)","url":"doShuffleSharing(project.crew.Crew)"}]

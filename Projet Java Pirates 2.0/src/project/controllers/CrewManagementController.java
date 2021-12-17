@@ -1,6 +1,7 @@
 package project.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import project.Main;
+import project.controllers.management.GraphController;
+import project.controllers.management.relations.RelationController;
 import project.crew.Attribution;
 import project.crew.Pirate;
 import project.crew.Preference;
@@ -33,9 +36,6 @@ import project.crew.graph.PirateVertex;
 import project.crew.io.CrewParser;
 import project.crew.sharing.NaiveSharing;
 import project.graph.Vertex;
-import project.graph.exceptions.EdgeDuplicateException;
-import project.graph.exceptions.InvalidCrewFileFormatException;
-import project.graph.exceptions.VertexNotFoundException;
 import project.graphviz.parser.GraphvizParser;
 
 /**
@@ -79,7 +79,7 @@ public class CrewManagementController {
 		comboPiratesEdit.setItems(CrewCreationController.pirates);
 		firstPirateChoice.setItems(CrewCreationController.pirates);
 		secondPirateChoice.setItems(CrewCreationController.pirates);
-		updateGraph();
+		GraphController.updateGraph(graph);
 		tablePref.getItems().addAll(tableData);
 		colName.setCellFactory(TextFieldTableCell.forTableColumn());
 		colOrder.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -192,7 +192,8 @@ public class CrewManagementController {
 		if(CrewCreationController.model.getGraph().getVertices().size() > 0) {
 			CrewCreationController.model.setAttributions(NaiveSharing.naiveAttribution(CrewCreationController.model, 
 					new ArrayList<Treasure>(Arrays.asList(CrewCreationController.model.getTreasures())), 0));
-			double solution = NaiveSharing.getNaiveCost(CrewCreationController.model, CrewCreationController.model.getTreasures());
+			
+			double solution = NaiveSharing.getAttributionCost(CrewCreationController.model, CrewCreationController.model.getTreasures());
 			labelSolutionCost.setText("Coût de la solution actuelle : " + Double.toString(solution));
 			
 			if(solution == 0)
@@ -200,19 +201,18 @@ public class CrewManagementController {
 			else
 				labelSolutionCost.setTextFill(Color.RED);
 			
-			CrewCreationController.model.setJealousPirate(NaiveSharing.getJealous(CrewCreationController.model, 
-					CrewCreationController.model.getTreasures()));
+			//CrewCreationController.model.setJealousPirate(NaiveSharing.getJealous(CrewCreationController.model, 
+			//		CrewCreationController.model.getTreasures()));
 			
 			tableDataAtt.clear();
 			
-			//TODO
 			for(Entry<PirateVertex, Treasure> t : CrewCreationController.model.getAttributions().entrySet())
 				tableDataAtt.add(new Attribution(t.getKey().getLabel().toString(), t.getValue().toString()));
 			
 			tableAttribution.getItems().clear();
 			tableAttribution.getItems().addAll(tableDataAtt);
 			
-			updateGraph();
+			GraphController.updateGraph(graph);
 		}
 	}
 	
@@ -225,8 +225,13 @@ public class CrewManagementController {
 		fileChooser.setTitle("Sauvegarder un équipage");
 		File f = fileChooser.showSaveDialog(Main.ps);
 		
-		if(f != null)
-			CrewParser.saveCrewToDisk(f.getAbsolutePath(), CrewCreationController.model);
+		if(f != null) {
+			try {
+				CrewParser.saveCrewToDisk(f.getAbsolutePath(), CrewCreationController.model);
+			} catch (FileNotFoundException e) {
+				//TODO
+			}
+		}
 	}
 	
 	@FXML protected void handleOpenCrew(ActionEvent event) {
@@ -236,42 +241,34 @@ public class CrewManagementController {
 		
 		try {
 			CrewCreationController.model = CrewParser.parseFromTxtFile(f.getAbsolutePath());
-			updateGraph();
+			GraphController.updateGraph(graph);
+			CrewCreationController.pirates.clear();
+			comboPiratesEdit.getItems().clear();
+			firstPirateChoice.getItems().clear();
+			secondPirateChoice.getItems().clear();
 			for(Vertex<Pirate> p : CrewCreationController.model.getGraph().getVertices())
 				CrewCreationController.pirates.add(p.getLabel());
-		} catch (InvalidCrewFileFormatException e) {
-			e.printStackTrace();
+			comboPiratesEdit.setItems(CrewCreationController.pirates);
+			firstPirateChoice.setItems(CrewCreationController.pirates);
+			secondPirateChoice.setItems(CrewCreationController.pirates);
+			tablePref.getItems().addAll(tableData);
+			colName.setCellFactory(TextFieldTableCell.forTableColumn());
+			colOrder.setCellFactory(TextFieldTableCell.forTableColumn());
+			for(Vertex<Pirate> p : CrewCreationController.model.getGraph().getVertices())
+				CrewCreationController.pirates.add(p.getLabel());
+		} catch (Exception e) {
+			showError("Échec lors de l'ouverture du fichier", "Le fichier donné est incorrect.");
 		}
 	}
 	
 	@FXML protected void handleDeselect(ActionEvent event) {
 		firstPirateChoice.getSelectionModel().clearSelection();
 		secondPirateChoice.getSelectionModel().clearSelection();
-		updateGraph();
+		GraphController.updateGraph(graph);
 	}
 	
 	@FXML protected void handleAddRelation(ActionEvent event) {
-		if(firstPirateChoice.getSelectionModel().getSelectedItem() != null && secondPirateChoice.getSelectionModel().getSelectedItem() != null) {
-			try {
-				CrewCreationController.model.addBadRelations(
-						firstPirateChoice.getSelectionModel().getSelectedIndex(),
-						secondPirateChoice.getSelectionModel().getSelectedIndex());
-				updateGraph();
-				graph.setImage(new Image("file:graph.png"));
-				firstPirateChoice.getSelectionModel().clearSelection();
-				secondPirateChoice.getSelectionModel().clearSelection();
-			} catch (IllegalArgumentException | EdgeDuplicateException | VertexNotFoundException e) {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Relation incorrect");
-				alert.setHeaderText(e.getMessage());
-				alert.showAndWait();
-			}
-		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Relation incorrect");
-			alert.setHeaderText("Veuillez sélectionner 2 pirates !");
-			alert.showAndWait();
-		}
+		RelationController.addRelation(firstPirateChoice, secondPirateChoice, graph);
 	}
 	
 	@FXML protected void handleMenuCrewCreation(ActionEvent event) {
@@ -288,6 +285,13 @@ public class CrewManagementController {
 		}
 	}
 	
+	public static void showError(String title, String message) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle(title);
+		alert.setHeaderText(message);
+		alert.showAndWait();
+	}
+	
 	@FXML protected void handleApplyChanges(ActionEvent event) {
 		if(comboPiratesEdit.getSelectionModel().getSelectedItem() == null) {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -302,20 +306,8 @@ public class CrewManagementController {
 				CrewCreationController.pirates.remove(comboPiratesEdit.getSelectionModel().getSelectedIndex());
 				CrewCreationController.pirates.add(i, new Pirate(pirateNameEditTextbox.getText(), p.getPreferences()));
 				comboPiratesEdit.getSelectionModel().selectFirst();
-				
-				updateGraph();
+				GraphController.updateGraph(graph);
 			}
 		}
-	}
-	
-	private void updateGraph() {
-		try {
-			GraphvizParser.savePirateGraphToPng(CrewCreationController.model.getGraph(), CrewCreationController.model);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		//webViewGraph.getEngine().load("file:///F:/Projets/L3/projet-java-L3/Projet%20Java%20Pirates%202.0/graph.svg");
-		graph.setImage(new Image("file:graph.png"));
 	}
 }

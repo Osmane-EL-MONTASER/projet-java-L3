@@ -5,11 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-
 import project.crew.Crew;
 import project.crew.Pirate;
 import project.crew.Treasure;
@@ -33,9 +31,6 @@ import project.graph.exceptions.VertexNotFoundException;
  * @since 3.0
  */
 public class CrewParser {
-	
-	public final static int BUFF_SIZE = 255;
-	
 	/**
 	 * Cette fonction permet de parser le contenu d'un
 	 * fichier texte contenant toutes les informations
@@ -49,8 +44,9 @@ public class CrewParser {
 	 * 
 	 * @return Un objet de type Crew représentant 
 	 * l'équipage et ses trésors.
+	 * @throws FileNotFoundException 
 	 */
-	public static Crew parseFromTxtFile(String filename) throws InvalidCrewFileFormatException {
+	public static Crew parseFromTxtFile(String filename) throws InvalidCrewFileFormatException, FileNotFoundException {
 		Crew temp = new Crew();
 		
 		FileReader fReader = null;
@@ -58,7 +54,7 @@ public class CrewParser {
 		try {
 			fReader = new FileReader(filename);
 		} catch (FileNotFoundException e) {
-			System.out.println("Le fichier d'équipage est introuvable !");
+			throw(new FileNotFoundException(e.getMessage()));
 		}
 		
 		if(fReader != null) {
@@ -79,25 +75,30 @@ public class CrewParser {
 						break;
 					case "deteste":
 						String pirateName1 = splitted[1].split("[)]")[0].split("[,]")[0];
-						String pirateName2 = splitted[1].split("[)]")[0].split(", ")[1];
+						String pirateName2 = splitted[1].split("[)]")[0].split(",[ ]?")[1];
 						
 						try {
 							temp.addBadRelations(getVertexIndexFromName(pirateName1, temp), getVertexIndexFromName(pirateName2, temp));
 						} catch (IllegalArgumentException | EdgeDuplicateException | VertexNotFoundException e) {
-							e.printStackTrace();
+							throw(new InvalidCrewFileFormatException("Erreur de syntaxe."));
 						}
 						break;
 					case "preferences":
 						String tempPrefStr = splitted[1].split("[)]")[0];
-						String pirateNamePref = tempPrefStr.split(", ")[0];
+						String pirateNamePref = tempPrefStr.split(",[ ]?")[0];
 						ArrayList<Treasure> preferences = new ArrayList<>();
 						
 						boolean namePass = false;
-						for(String str : tempPrefStr.split(", ")) {
+						for(String str : tempPrefStr.split(",[ ]?")) {
 							if(!namePass)
 								namePass = true;
-							else
-								preferences.add(treasures.get(getTreasureIndexFromName(str, treasures)));
+							else {
+								try {
+									preferences.add(treasures.get(getTreasureIndexFromName(str, treasures)));
+								} catch(Exception e) {
+									throw(new InvalidCrewFileFormatException("Erreur de syntaxe."));
+								}
+							}
 						}
 						
 						if(preferences.size() < treasures.size())
@@ -107,7 +108,7 @@ public class CrewParser {
 							temp.getGraph().getVertex(getVertexIndexFromName(pirateNamePref, temp)).getLabel().setPreferences(
 									preferences.toArray(new Treasure[treasures.size()]));
 						} catch (VertexNotFoundException e) {
-							e.printStackTrace();
+							throw(new InvalidCrewFileFormatException("Erreur de syntaxe."));
 						}
 						break;
 					}
@@ -115,7 +116,7 @@ public class CrewParser {
 				
 				temp.setTreasures(treasures.toArray(new Treasure[treasures.size()]));
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw(new InvalidCrewFileFormatException("Erreur de syntaxe."));
 			}
 			try {
 				bReader.close();
@@ -134,7 +135,16 @@ public class CrewParser {
 		return temp;
 	}
 	
-	public static void saveCrewToDisk(String filename, Crew c) {
+	/**
+	 * Fonction qui permet de sauvegarder un équipage
+	 * dans un fichier texte.
+	 * 
+	 * @param filename Le chemin du fichier.
+	 * @param c L'équipage à enregistrer.
+	 * @throws FileNotFoundException Si le chemin spécifié est
+	 * introuvable.
+	 */
+	public static void saveCrewToDisk(String filename, Crew c) throws FileNotFoundException {
 		File f = new File(filename);
 		
 		try {
@@ -147,7 +157,7 @@ public class CrewParser {
 		try {
 			os = new FileOutputStream(filename);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw(new FileNotFoundException(e.getMessage()));
 		}
 		
 		PrintStream ps = new PrintStream(os);
@@ -178,17 +188,20 @@ public class CrewParser {
 		try {
 			os.close();
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			System.out.println("Impossible de fermer le fichier.");
 		}
 	}
 	
 	/**
+	 * Cette fonction permet de retrouver l'index du trésor
+	 * dans la liste donnée en paramètre à partir de son
+	 * nom.
+	 * Elle est utilisée pour le chargement des équipages.
 	 * 
+	 * @param name Le nom du trésor à chercher.
+	 * @param treasures La liste d'objets de type Trésor.
+	 * @return L'index sous forme d'entier du trésor.
 	 */
-	public static void parseFromCSVFile() {
-		//TODO !!!
-	}
-	
 	private static int getTreasureIndexFromName(String name, ArrayList<Treasure> treasures) {
 		int notFound = -1;
 		int i = 0;
@@ -200,7 +213,16 @@ public class CrewParser {
 		return notFound;
 	}
 	
-	private static int getVertexIndexFromName(String name, Crew c) {
+	/**
+	 * Cette fonction permet de récupérer l'index du vertex
+	 * correspondant au nom de pirate passé en paramètre.
+	 * Elle est utilisée pour le chargement des équipages.
+	 * 
+	 * @param name Le nom du pirate.
+	 * @param c L'équipage qui contient un objet Graph.
+	 * @return L'index sous forme d'entier du vertex.
+	 */
+	public static int getVertexIndexFromName(String name, Crew c) {
 		int notFound = -1;
 		int i = 0;
 		for(Vertex<Pirate> pv : c.getGraph().getVertices()) {
@@ -211,17 +233,23 @@ public class CrewParser {
 		return notFound;
 	}
 	
+	/**
+	 * Fonction Main de test des fonctions de chargements et
+	 * de sauvegarde.
+	 */
 	public static void main(String args[]) {
 		try {
-			System.out.println(parseFromTxtFile("crew.txt"));
-		} catch (InvalidCrewFileFormatException e) {
+			System.out.println(parseFromTxtFile("crewSaved2.txt"));
+		} catch (InvalidCrewFileFormatException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		/*try {
+		try {
 			saveCrewToDisk("crewSaved.txt", parseFromTxtFile("crewSaved.txt"));
 		} catch (InvalidCrewFileFormatException e) {
 			e.printStackTrace();
-		}*/
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

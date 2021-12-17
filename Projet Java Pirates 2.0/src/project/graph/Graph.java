@@ -2,7 +2,6 @@ package project.graph;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
 import project.graph.exceptions.EdgeDuplicateException;
 import project.graph.exceptions.EdgeNotFoundException;
 import project.graph.exceptions.VertexNotFoundException;
@@ -106,6 +105,16 @@ public class Graph<T> {
 			throw(new EdgeDuplicateException("Cannot add edge because there is already one between these vertices!"));
 		
 		edges.add(new Edge<T>(v1, v2));
+	}
+	
+	public void deleteEdge(int v1, int v2) throws EdgeNotFoundException, IllegalArgumentException  {
+		if(v1 >= vertices.size() || v2 >= vertices.size() || v1 < 0 || v2 < 0)
+			throw(new IllegalArgumentException("Cannot add edge because 1 or the 2 vertices doesn't exist!"));
+		
+		if(!isEdgeExists(vertices.get(v1), vertices.get(v2)))
+			throw(new EdgeNotFoundException("Cannot add edge because there is no relation between these vertices!"));
+		
+		edges.indexOf(new Edge<>(vertices.get(v1), vertices.get(v2)));
 	}
 	
 	/**

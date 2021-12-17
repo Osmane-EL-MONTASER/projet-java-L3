@@ -73,7 +73,7 @@ public class CrewTest2 {
 		c.setAttributions( 
 				NaiveSharing.naiveAttribution(c, new ArrayList<>(Arrays.asList(treasures)), 0));
 		
-		System.out.println("Coût naïf : " + NaiveSharing.getNaiveCost(c, treasures));
+		System.out.println("Coût naïf : " + NaiveSharing.getAttributionCost(c, treasures));
 		
 		System.out.println("Les attribtions sont les suivantes :");
 		System.out.println(c.getAttributions());

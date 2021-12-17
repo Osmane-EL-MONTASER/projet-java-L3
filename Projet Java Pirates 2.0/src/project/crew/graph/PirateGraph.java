@@ -40,6 +40,16 @@ public class PirateGraph extends Graph<Pirate> {
 			return new PirateEdge(v2, v1);
 	}
 	
+	public int getNeighbourNumber(Vertex<Pirate> v) {
+		int nb = 0;
+		
+		for(Edge<Pirate> edge : edges)
+			if(edge.getV1() == v || edge.getV2() == v)
+				nb++;
+		
+		return nb;
+	}
+	
 	/**
 	 * Override la fonction toString pour afficher les pirates
 	 * présents dans l'équipage ainsi que leurs relations.

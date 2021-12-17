@@ -12,6 +12,8 @@ import project.graph.exceptions.VertexNotFoundException;
 /**
  * Représente l'équipage avec ses pirates
  * et ses trésors.
+ * On peut aussi récupérer la liste des pirates
+ * qui sont jaloux et les attributions.
  * 
  * @author EL MONTASER Osmane
  * @author VIDART Paul
@@ -19,26 +21,57 @@ import project.graph.exceptions.VertexNotFoundException;
  * @since 2.0
  */
 public class Crew {
+	/**
+	 * Le graphe de pirates correspondant à l'équipage.
+	 */
 	private PirateGraph pg;
+	/**
+	 * La liste des attributions qui ont été faites. Elle
+	 * est initialisée à une liste vide.
+	 */
 	private LinkedHashMap<PirateVertex, Treasure> attributions;
+	/**
+	 * Liste des trésors à partager, initialisé à un tableau
+	 * vide.
+	 */
 	private Treasure treasures[];
+	/**
+	 * Liste des pirates qui sont jaloux, initialisé à une liste
+	 * vide.
+	 */
 	private ArrayList<Vertex<Pirate>> jealousPirates;
 	
 	/**
-	 * Initialise le graphe de pirates et la liste des 
-	 * attributions.
+	 * Initialise le graphe de pirates, la liste des 
+	 * attributions, la liste des pirates jaloux et
+	 * la liste de attributions.
 	 * @since 1.0
+	 * @version 2.0
 	 */
 	public Crew() {
 		pg = new PirateGraph();
 		attributions = new LinkedHashMap<>();
 		jealousPirates = new ArrayList<>();
+		treasures = new Treasure[1];
 	}
 	
+	/**
+	 * Récupérer la liste des pirates jaloux dans cet
+	 * équipage.
+	 * 
+	 * @return La liste des pirates jaloux.
+	 */
 	public ArrayList<Vertex<Pirate>> getJealousPirates() {
 		return jealousPirates;
 	}
 	
+	/**
+	 * Définir quels sont les pirates jaloux dans cet
+	 * équipage.
+	 * 
+	 * @param jealousPirates La nouvelle liste de pirates
+	 * jaloux.
+	 */
 	public void setJealousPirate(ArrayList<Vertex<Pirate>> jealousPirates) {
 		this.jealousPirates = jealousPirates;
 	}
@@ -88,6 +121,15 @@ public class Crew {
 			throw(e);
 		}
 	}
+	//TODO
+	/**
+	 * 
+	 * @param i
+	 * @param j
+	 */
+	public void deleteRelations(int i, int j) {
+		//TODO
+	}
 	
 	/**
 	 * Vérifier si les pirates aux ids i et j ont des mauvaises
@@ -136,14 +178,27 @@ public class Crew {
 		this.attributions = attributions;
 	}
 	
+	/**
+	 * Permet de récupérer un tableau de trésors.
+	 * @return un tableau de trésors.
+	 */
 	public Treasure[] getTreasures() {
 		return treasures;
 	}
 	
+	/**
+	 * Permet de définir le tableau de trésors à cet 
+	 * équipage.
+	 * @param treasures le nouveau tableau de trésors.
+	 */
 	public void setTreasures(Treasure[] treasures) {
 		this.treasures = treasures;
 	}
 	
+	/**
+	 * Redéfinition de la méthode toString() afin de
+	 * l'afficher plus rapidement dans la console.
+	 */
 	@Override
 	public String toString() {
 		String str = new String();

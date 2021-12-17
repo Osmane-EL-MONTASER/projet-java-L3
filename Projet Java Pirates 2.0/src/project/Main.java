@@ -25,6 +25,13 @@ public class Main extends Application {
 	public static Scene scene;
 	public static Stage ps;
 	
+	/**
+	 * Fonction permettant de lancer le programme
+	 * sous sa première version sans la sauvegarde
+	 * ou la chargement d'équipages.
+	 * 
+	 * @deprecated
+	 */
 	public static void terminalProject() {
 		TerminalGraphMaker.setPirates();
 		
@@ -36,7 +43,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	 
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
