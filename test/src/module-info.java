@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author eosma
- *
- */
-module test {
-}
