@@ -74,6 +74,24 @@ public class BetterCrewManagement {
 	}
 	
 	/**
+	 * Récupérer la liste des trésors encore à attribuer.
+	 * 
+	 * @param attributions Les attributions actuelles.
+	 * @param treasures Le tableau des trésors à partager.
+	 * @return La liste des trésors encore à attribuer.
+	 */
+	public static ArrayList<Treasure> getRemainingTreasures(LinkedHashMap<PirateVertex, Treasure> attributions,
+			Treasure treasures[]) {
+		ArrayList<Treasure> remaining = new ArrayList<>();
+		
+		for(Treasure t : treasures)
+			if(!attributions.containsValue(t))
+				remaining.add(t);
+		
+		return remaining;
+	}
+	
+	/**
 	 * Faire une résolution manuelle.
 	 * 
 	 * @param c L'équipage sur lequel faire la résolution
@@ -106,9 +124,12 @@ public class BetterCrewManagement {
 				System.out.println(c.getAttributions());
 				break;
 			case "4":
-				if(c.getAttributions().size() != c.getGraph().getOrder())
-					System.out.println("Calcul du coup impossible car il manque une attribution à :\n" 
+				if(c.getAttributions().size() != c.getGraph().getOrder()) {
+					System.out.println("Calcul du coût impossible car il manque une attribution à :\n" 
 				+ getRemainingAttributions(c.getAttributions(), c.getGraph().getVertices()));
+					System.out.println("Trésors non attribués :\n" + 
+				getRemainingTreasures(c.getAttributions(), c.getTreasures()));
+				}
 				else
 					System.out.println("Coût actuel : " + NaiveSharing.getAttributionCost(c, c.getTreasures()));
 				break;
